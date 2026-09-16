@@ -1,0 +1,28 @@
+# Python & Virtual Environments
+*.py
+*.pyc
+__pycache__/
+venv/
+.env
+
+# Backup files & test files
+*.bak*
+*.txt
+scratch/
+test_*.html
+
+# Selenium & test screenshots
+screenshot_*.png
+screenshot_*.jpg
+frame_0.0s.jpg
+frame_0.5s.jpg
+frame_1.2s.jpg
+frame_1.5s.jpg
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.gemini/
+.system_generated/
