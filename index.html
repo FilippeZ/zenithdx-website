@@ -568,27 +568,18 @@ body.intro-dismissed .stagger-metric-card-4 {
           <source src="ZenithDX_desktop.mp4" type="video/mp4">
         </video>
 
-        <!-- Dynamic Audio Status Indicator / Unmute Pill (Top Right) -->
-        <button type="button" id="intro-sound-toggle" onclick="event.stopPropagation(); window.toggleIntroSound();" class="absolute top-5 right-5 sm:top-7 sm:right-8 z-40 flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-slate-950/85 hover:bg-slate-900 backdrop-blur-md border border-cyan-400/40 text-white font-mono text-xs shadow-lg cursor-pointer transition-all hover:scale-105 active:scale-95 select-none" title="Audio Toggle" aria-label="Toggle Audio">
-          <span id="intro-sound-icon" class="material-symbols-outlined text-amber-400 text-sm sm:text-base animate-pulse">volume_off</span>
-          <span id="intro-sound-label" class="text-[11px] sm:text-xs font-semibold text-slate-200">
-            <span class="lang-en">Tap for Audio</span>
-            <span class="lang-el hidden">Πατήστε για Ήχο</span>
+        <!-- Single Audio Control Pill (Top Right) -->
+        <button type="button" id="intro-sound-toggle" onclick="event.stopPropagation(); window.toggleIntroSound();" class="absolute top-5 right-5 sm:top-7 sm:right-8 z-40 flex items-center gap-2.5 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-slate-950/90 hover:bg-slate-900 backdrop-blur-md border border-cyan-400/60 text-white font-mono text-xs shadow-[0_4px_20px_rgba(6,182,212,0.35)] cursor-pointer transition-all hover:scale-105 active:scale-95 select-none" title="Audio Toggle" aria-label="Toggle Audio">
+          <span id="intro-sound-icon" class="material-symbols-outlined text-amber-400 text-base animate-pulse">volume_off</span>
+          <span id="intro-sound-label" class="text-[11.5px] sm:text-xs font-bold tracking-wide">
+            <span class="lang-en">ENABLE AUDIO 🔊</span>
+            <span class="lang-el hidden">ΕΝΕΡΓΟΠΟΙΗΣΗ ΗΧΟΥ 🔊</span>
           </span>
         </button>
   
         <!-- Action Buttons: Floating centrally at bottom on mobile, bottom-right on desktop -->
-        <div class="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-8 z-30 flex flex-col items-center gap-2.5">
+        <div class="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-8 z-30 flex flex-col items-center gap-2">
           
-          <!-- Prominent Glowing Unmute CTA Button -->
-          <button type="button" id="intro-center-unmute-btn" onclick="event.stopPropagation(); window.unmuteIntroVideo(true);" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-cyan-600 via-cyan-500 to-teal-500 hover:from-cyan-500 hover:to-teal-400 text-white text-xs font-mono font-bold tracking-wider backdrop-blur-md border border-cyan-300/60 shadow-[0_0_25px_rgba(6,182,212,0.6)] flex items-center gap-2 cursor-pointer transition-all hover:scale-105 active:scale-95 animate-pulse">
-            <span id="center-unmute-icon" class="material-symbols-outlined text-base">volume_up</span>
-            <span id="center-unmute-label">
-              <span class="lang-en">ENABLE AUDIO 🔊</span>
-              <span class="lang-el hidden">ΕΝΕΡΓΟΠΟΙΗΣΗ ΗΧΟΥ 🔊</span>
-            </span>
-          </button>
-
           <!-- Enter the Platform Button -->
           <button id="skip-intro-btn" onclick="event.stopPropagation(); dismissIntroVideo();" class="px-7 sm:px-8 py-3.5 sm:py-4 rounded-full bg-slate-950/95 hover:bg-slate-900 text-white text-xs font-mono font-bold tracking-wider backdrop-blur-md border border-cyan-500/40 hover:border-cyan-400 transition-all cursor-pointer shadow-[0_16px_40px_rgba(8,145,178,0.3)] flex items-center justify-center gap-2.5 group hover:scale-105 active:scale-95 whitespace-nowrap">
             <span class="lang-en">ENTER THE PLATFORM</span>
@@ -607,44 +598,32 @@ body.intro-dismissed .stagger-metric-card-4 {
     <script>
       // Fullscreen Intro Video, Sound & Entrance Animations Coordinator
       window.updateIntroSoundUI = function(isAudible) {
+        const toggleBtn = document.getElementById('intro-sound-toggle');
         const icon = document.getElementById('intro-sound-icon');
         const label = document.getElementById('intro-sound-label');
-        const centerBtn = document.getElementById('intro-center-unmute-btn');
-        const centerIcon = document.getElementById('center-unmute-icon');
-        const centerLabel = document.getElementById('center-unmute-label');
 
-        if (icon && label) {
+        if (icon && label && toggleBtn) {
           if (isAudible) {
+            toggleBtn.className = "absolute top-5 right-5 sm:top-7 sm:right-8 z-40 flex items-center gap-2.5 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-emerald-950/90 hover:bg-emerald-900 backdrop-blur-md border border-emerald-400/80 text-emerald-100 font-mono text-xs shadow-[0_0_25px_rgba(16,185,129,0.5)] cursor-pointer transition-all hover:scale-105 active:scale-95 select-none";
             icon.textContent = 'volume_up';
-            icon.className = 'material-symbols-outlined text-teal-400 text-sm sm:text-base';
-            label.innerHTML = '<span class="lang-en">Audio Active</span><span class="lang-el hidden">Ήχος Ενεργός</span>';
-            if (centerBtn) {
-              centerBtn.classList.remove('animate-pulse', 'from-cyan-600', 'via-cyan-500', 'to-teal-500');
-              centerBtn.classList.add('bg-emerald-600/90', 'border-emerald-300/50', 'shadow-[0_0_20px_rgba(16,185,129,0.4)]');
-              if (centerIcon) centerIcon.textContent = 'volume_up';
-              if (centerLabel) centerLabel.innerHTML = '<span class="lang-en">AUDIO ON ✓</span><span class="lang-el hidden">ΗΧΟΣ ΕΝΕΡΓΟΣ ✓</span>';
-            }
+            icon.className = 'material-symbols-outlined text-emerald-400 text-base';
+            label.innerHTML = '<span class="lang-en">AUDIO ACTIVE ✓</span><span class="lang-el hidden">ΗΧΟΣ ΕΝΕΡΓΟΣ ✓</span>';
           } else {
+            toggleBtn.className = "absolute top-5 right-5 sm:top-7 sm:right-8 z-40 flex items-center gap-2.5 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-slate-950/90 hover:bg-slate-900 backdrop-blur-md border border-cyan-400/60 text-white font-mono text-xs shadow-[0_4px_20px_rgba(6,182,212,0.35)] cursor-pointer transition-all hover:scale-105 active:scale-95 select-none";
             icon.textContent = 'volume_off';
-            icon.className = 'material-symbols-outlined text-amber-400 text-sm sm:text-base animate-pulse';
-            label.innerHTML = '<span class="lang-en">Tap for Audio</span><span class="lang-el hidden">Πατήστε για Ήχο</span>';
-            if (centerBtn) {
-              centerBtn.classList.add('animate-pulse', 'from-cyan-600', 'via-cyan-500', 'to-teal-500');
-              centerBtn.classList.remove('bg-emerald-600/90', 'border-emerald-300/50');
-              if (centerIcon) centerIcon.textContent = 'volume_up';
-              if (centerLabel) centerLabel.innerHTML = '<span class="lang-en">ENABLE AUDIO 🔊</span><span class="lang-el hidden">ΕΝΕΡΓΟΠΟΙΗΣΗ ΗΧΟΥ 🔊</span>';
-            }
+            icon.className = 'material-symbols-outlined text-amber-400 text-base animate-pulse';
+            label.innerHTML = '<span class="lang-en">ENABLE AUDIO 🔊</span><span class="lang-el hidden">ΕΝΕΡΓΟΠΟΙΗΣΗ ΗΧΟΥ 🔊</span>';
           }
         }
       };
 
-      window.unmuteIntroVideo = function(rewind) {
+      window.unmuteIntroVideo = function() {
         const video = document.getElementById('intro-video-element');
         if (!video) return;
         video.muted = false;
         video.defaultMuted = false;
         video.volume = 1.0;
-        if (rewind && video.currentTime < 3.0) {
+        if (video.currentTime >= (video.duration - 0.5)) {
           try { video.currentTime = 0; } catch(e) {}
         }
         const p = video.play();
@@ -652,7 +631,7 @@ body.intro-dismissed .stagger-metric-card-4 {
           p.then(() => {
             window.updateIntroSoundUI(true);
           }).catch((err) => {
-            console.log("Audio play unlock:", err);
+            console.log("Audio play status:", err);
             window.updateIntroSoundUI(true);
           });
         } else {
@@ -664,7 +643,7 @@ body.intro-dismissed .stagger-metric-card-4 {
         const video = document.getElementById('intro-video-element');
         if (video) {
           if (video.muted) {
-            window.unmuteIntroVideo(true);
+            window.unmuteIntroVideo();
           } else {
             video.muted = true;
             window.updateIntroSoundUI(false);
@@ -677,7 +656,7 @@ body.intro-dismissed .stagger-metric-card-4 {
         if (video) {
           if (video.muted) {
             // Unmute on screen tap
-            window.unmuteIntroVideo(true);
+            window.unmuteIntroVideo();
           } else {
             // If already unmuted and tapped again, advance into platform
             window.dismissIntroVideo();
@@ -9374,12 +9353,6 @@ body.intro-dismissed .stagger-metric-card-4 {
             <a href="#data-processing-agreement" onclick="openLegalModal('dpa'); return false;" class="group flex items-center gap-2 hover:text-cyan-700 transition-colors">
               <span class="text-cyan-500 text-[12px] group-hover:translate-x-0.5 transition-transform font-bold">&rsaquo;</span>
               <span>Data Processing Agreement (DPA)</span>
-            </a>
-          </li>
-          <li>
-            <a href="#tech" onclick="navigateTo('tech'); setTimeout(function(){ document.getElementById('interactive-passport-card')?.scrollIntoView({behavior:'smooth', block:'center'}); }, 250); return false;" class="group flex items-center gap-2 text-cyan-700 font-semibold hover:text-cyan-900 transition-colors">
-              <span class="text-cyan-600 text-[12px] group-hover:translate-x-0.5 transition-transform font-bold">&rsaquo;</span>
-              <span>System Architect: Verified (TEE 174033)</span>
             </a>
           </li>
         </ul>
