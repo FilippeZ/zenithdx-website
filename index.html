@@ -9391,32 +9391,33 @@ body.intro-dismissed .stagger-metric-card-4 {
 
     <!-- Modal Header -->
     <div class="mb-5 pr-10">
-      <div class="flex items-center gap-2 mb-2">
-        <span class="font-mono text-[11px] font-bold px-3 py-0.5 rounded-full bg-cyan-100 text-cyan-800 border border-cyan-200 uppercase tracking-wider">
-          GOVERNANCE &amp; LEGAL FRAMEWORK
+      <div class="flex items-center gap-2 mb-1.5">
+        <span class="inline-flex items-center gap-1.5 text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+          Air-Gapped Sovereign Architecture
         </span>
-        <span class="font-mono text-[11px] font-bold px-3 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200 uppercase tracking-wider">
-          SOVEREIGN SaMD
+        <span class="text-[11px] font-mono text-slate-400">
+          EU MDR &amp; GDPR Aligned
         </span>
       </div>
       <h3 id="legal-modal-title" class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
         Privacy Policy (GDPR Compliance)
       </h3>
-      <p class="text-slate-500 text-xs sm:text-sm mt-1">
-        ZenithDx Technologies IKE &bull; Emergency Department On-Device Clinical Decision Support
-      </p>
     </div>
 
     <!-- Navigation Tabs -->
     <div class="flex items-center gap-2 border-b border-slate-200 pb-3 mb-5 overflow-x-auto text-xs font-mono font-bold">
-      <button id="legal-tab-privacy" onclick="switchLegalTab('privacy')" class="px-3.5 py-1.5 rounded-xl bg-cyan-600 text-white shadow-xs transition-colors">
-        Privacy Policy (GDPR)
+      <button id="legal-tab-privacy" onclick="switchLegalTab('privacy')" class="px-4 py-2 rounded-xl bg-cyan-600 text-white shadow-xs transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer">
+        <span class="material-symbols-outlined text-[16px]">verified_user</span>
+        <span>Privacy Policy (GDPR)</span>
       </button>
-      <button id="legal-tab-terms" onclick="switchLegalTab('terms')" class="px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors">
-        Terms of Service (RUO)
+      <button id="legal-tab-terms" onclick="switchLegalTab('terms')" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer">
+        <span class="material-symbols-outlined text-[16px]">gavel</span>
+        <span>Terms of Service (RUO)</span>
       </button>
-      <button id="legal-tab-dpa" onclick="switchLegalTab('dpa')" class="px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors">
-        Data Processing Agreement (DPA)
+      <button id="legal-tab-dpa" onclick="switchLegalTab('dpa')" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer">
+        <span class="material-symbols-outlined text-[16px]">shield</span>
+        <span>Data Processing Agreement (DPA)</span>
       </button>
     </div>
 
@@ -9425,61 +9426,227 @@ body.intro-dismissed .stagger-metric-card-4 {
       
       <!-- TAB 1: Privacy Policy -->
       <div id="legal-content-privacy" class="space-y-4">
-        <div class="p-4 rounded-2xl bg-cyan-50/60 border border-cyan-200/80 text-cyan-900">
-          <strong class="block font-bold mb-1 text-sm text-cyan-950">100% On-Premise Air-Gapped Sovereign Architecture</strong>
-          ZenithDx is engineered with a strict <strong>Zero Cloud Egress</strong> mandate. All patient data, DICOM imaging, HL7 FHIR telemetry, and AI inference execute exclusively within the physical hospital Local Area Network (LAN). No Protected Health Information (PHI) ever leaves the hospital premises.
+        <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-cyan-50/90 via-teal-50/50 to-white border border-cyan-200/80 text-cyan-950 shadow-xs">
+          <div class="flex items-center gap-2 font-bold text-sm text-cyan-950 mb-1.5">
+            <span class="material-symbols-outlined text-cyan-600 text-lg">lock</span>
+            <span>100% On-Premise Air-Gapped Sovereign Architecture</span>
+          </div>
+          <p class="text-xs sm:text-[13px] leading-relaxed text-cyan-900/90">
+            ZenithDx is engineered with a strict <strong>Zero Cloud Egress</strong> mandate. All patient data, DICOM imaging, HL7 FHIR telemetry, and AI inference execute exclusively within the physical hospital Local Area Network (LAN). No Protected Health Information (PHI) ever leaves the hospital premises.
+          </p>
         </div>
 
-        <h4 class="font-bold text-slate-800 text-sm mt-4">1. Data Controller vs. Data Processor</h4>
-        <p>The hospital healthcare institution remains the sole Data Controller of all clinical and patient data. ZenithDx operates as an on-premise computational runtime with zero remote access, zero telemetry beaconing, and zero third-party cloud data egress.</p>
+        <div class="grid grid-cols-1 gap-3 pt-1">
+          <!-- Section 1 -->
+          <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80 hover:border-slate-300 transition-colors">
+            <div class="flex items-center justify-between mb-1.5">
+              <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                <span class="w-5 h-5 rounded-md bg-cyan-100 text-cyan-800 text-[11px] font-mono font-bold flex items-center justify-center">1</span>
+                <span>Data Controller vs. Data Processor Sovereignty</span>
+              </h4>
+              <span class="text-[10.5px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-slate-200/70 text-slate-700">GDPR Art. 4 &amp; 28</span>
+            </div>
+            <p class="text-slate-600 text-xs sm:text-[12.5px] leading-relaxed">
+              The hospital healthcare institution remains the sole Data Controller of all clinical and patient data. ZenithDx operates as an on-premise computational runtime with zero remote access, zero telemetry beaconing, and zero third-party cloud data egress.
+            </p>
+          </div>
 
-        <h4 class="font-bold text-slate-800 text-sm mt-3">2. GDPR Article 9 &amp; Article 25 Compliance</h4>
-        <p>By enforcing <em>Privacy by Design and by Default</em> (GDPR Art. 25), special categories of health data (GDPR Art. 9) are processed strictly in volatile RAM memory during diagnostic inference and are immediately cryptographically sealed in immutable local logs without cloud storage.</p>
+          <!-- Section 2 -->
+          <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80 hover:border-slate-300 transition-colors">
+            <div class="flex items-center justify-between mb-1.5">
+              <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                <span class="w-5 h-5 rounded-md bg-cyan-100 text-cyan-800 text-[11px] font-mono font-bold flex items-center justify-center">2</span>
+                <span>GDPR Article 9 &amp; Article 25 Compliance</span>
+              </h4>
+              <span class="text-[10.5px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-slate-200/70 text-slate-700">Privacy by Design</span>
+            </div>
+            <p class="text-slate-600 text-xs sm:text-[12.5px] leading-relaxed">
+              By enforcing <em>Privacy by Design and by Default</em> (GDPR Art. 25), special categories of health data (GDPR Art. 9) are processed strictly in volatile RAM memory during diagnostic inference and are immediately cryptographically sealed in immutable local logs without cloud storage.
+            </p>
+          </div>
 
-        <h4 class="font-bold text-slate-800 text-sm mt-3">3. Cryptographic WORM Audit Trails</h4>
-        <p>Every inference cycle computes a SHA-256 tamper-evident hash stored locally in a Write-Once-Read-Many (WORM) audit register, providing complete forensic accountability under EU NIS2 and institutional Data Protection Officer (DPO) standards.</p>
+          <!-- Section 3 -->
+          <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80 hover:border-slate-300 transition-colors">
+            <div class="flex items-center justify-between mb-1.5">
+              <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                <span class="w-5 h-5 rounded-md bg-cyan-100 text-cyan-800 text-[11px] font-mono font-bold flex items-center justify-center">3</span>
+                <span>Cryptographic WORM Audit Trails</span>
+              </h4>
+              <span class="text-[10.5px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-slate-200/70 text-slate-700">SHA-256 Ledger</span>
+            </div>
+            <p class="text-slate-600 text-xs sm:text-[12.5px] leading-relaxed">
+              Every inference cycle computes a SHA-256 tamper-evident hash stored locally in a Write-Once-Read-Many (WORM) audit register, providing complete forensic accountability under EU NIS2 and institutional Data Protection Officer (DPO) standards.
+            </p>
+          </div>
+
+          <!-- Section 4 -->
+          <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80 hover:border-slate-300 transition-colors">
+            <div class="flex items-center justify-between mb-1.5">
+              <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                <span class="w-5 h-5 rounded-md bg-cyan-100 text-cyan-800 text-[11px] font-mono font-bold flex items-center justify-center">4</span>
+                <span>Data Subject Rights &amp; Ephemeral Memory Isolation</span>
+              </h4>
+              <span class="text-[10.5px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-slate-200/70 text-slate-700">Zero Retention</span>
+            </div>
+            <p class="text-slate-600 text-xs sm:text-[12.5px] leading-relaxed">
+              Because no patient data or intermediate neural activations persist beyond active inference runtime, data subjects' rights (Erasure, Rectification, Restriction under GDPR Arts. 15-22) are naturally preserved by architecture. ZenithDx maintains zero central database of patient records.
+            </p>
+          </div>
+        </div>
       </div>
 
       <!-- TAB 2: Terms of Service -->
       <div id="legal-content-terms" class="space-y-4 hidden">
-        <div class="p-4 rounded-2xl bg-blue-50/60 border border-blue-200/80 text-blue-900">
-          <strong class="block font-bold mb-1 text-sm text-blue-950">EU AI Act Article 14: Human-in-the-Loop (HITL) Governance</strong>
-          ZenithDx functions strictly as a Clinical Decision Support (CDS) copilot. The attending physician retains ultimate diagnostic sovereignty and legal responsibility for all patient admission, discharge, and triage decisions.
+        <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-blue-50/90 via-indigo-50/50 to-white border border-blue-200/80 text-blue-950 shadow-xs">
+          <div class="flex items-center gap-2 font-bold text-sm text-blue-950 mb-1.5">
+            <span class="material-symbols-outlined text-blue-600 text-lg">psychology</span>
+            <span>EU AI Act Article 14: Human-in-the-Loop (HITL) Governance</span>
+          </div>
+          <p class="text-xs sm:text-[13px] leading-relaxed text-blue-900/90">
+            ZenithDx functions strictly as a Clinical Decision Support (CDS) copilot. The attending physician retains ultimate diagnostic sovereignty and legal responsibility for all patient admission, discharge, and triage decisions.
+          </p>
         </div>
 
-        <h4 class="font-bold text-slate-800 text-sm mt-4">1. Scope of Use &amp; Regulatory Status</h4>
-        <p>ZenithDx is currently made available for Research Use Only (RUO) and Institutional Shadow-Mode Pilot Evaluations under Institutional Review Board (IRB) / Ethics Committee protocols, ahead of formal CE Mark certification under EU MDR Class IIa (Roadmap 2027).</p>
+        <div class="grid grid-cols-1 gap-3 pt-1">
+          <!-- Section 1 -->
+          <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80 hover:border-slate-300 transition-colors">
+            <div class="flex items-center justify-between mb-1.5">
+              <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                <span class="w-5 h-5 rounded-md bg-blue-100 text-blue-800 text-[11px] font-mono font-bold flex items-center justify-center">1</span>
+                <span>Scope of Use &amp; Regulatory Status</span>
+              </h4>
+              <span class="text-[10.5px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-slate-200/70 text-slate-700">MDR Roadmap 2027</span>
+            </div>
+            <p class="text-slate-600 text-xs sm:text-[12.5px] leading-relaxed">
+              ZenithDx is currently made available for Research Use Only (RUO) and Institutional Shadow-Mode Pilot Evaluations under Institutional Review Board (IRB) / Ethics Committee protocols, ahead of formal CE Mark certification under EU MDR Class IIa (Roadmap 2027).
+            </p>
+          </div>
 
-        <h4 class="font-bold text-slate-800 text-sm mt-3">2. Clinical Decision Support Transparency</h4>
-        <p>All recommendations provide dual explainability (multimodal Grad-CAM attention maps and symbolic clinical feature attribution) to eliminate black-box opacity in accordance with high-risk AI safety mandates.</p>
+          <!-- Section 2 -->
+          <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80 hover:border-slate-300 transition-colors">
+            <div class="flex items-center justify-between mb-1.5">
+              <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                <span class="w-5 h-5 rounded-md bg-blue-100 text-blue-800 text-[11px] font-mono font-bold flex items-center justify-center">2</span>
+                <span>Clinical Decision Support Transparency</span>
+              </h4>
+              <span class="text-[10.5px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-slate-200/70 text-slate-700">Dual Explainable XAI</span>
+            </div>
+            <p class="text-slate-600 text-xs sm:text-[12.5px] leading-relaxed">
+              All recommendations provide dual explainability (multimodal Grad-CAM attention maps and symbolic clinical feature attribution) to eliminate black-box opacity in accordance with high-risk AI safety mandates.
+            </p>
+          </div>
 
-        <h4 class="font-bold text-slate-800 text-sm mt-3">3. Intellectual Property</h4>
-        <p>The core neural network architectures, edge quantization pipelines, and multimodal fusion algorithms are proprietary intellectual property of ZenithDx Technologies IKE (Academic Spin-Off, CEID University of Patras).</p>
+          <!-- Section 3 -->
+          <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80 hover:border-slate-300 transition-colors">
+            <div class="flex items-center justify-between mb-1.5">
+              <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                <span class="w-5 h-5 rounded-md bg-blue-100 text-blue-800 text-[11px] font-mono font-bold flex items-center justify-center">3</span>
+                <span>Clinician Discretion &amp; Override Authority</span>
+              </h4>
+              <span class="text-[10.5px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-slate-200/70 text-slate-700">Art. 14 Human Oversight</span>
+            </div>
+            <p class="text-slate-600 text-xs sm:text-[12.5px] leading-relaxed">
+              Medical clinicians possess unconstrained authority to disregard, modify, or override copilot suggestions at any point in time. ZenithDx does not execute automated clinical actions, closed-loop medication dispensing, or unmonitored triage dispatch.
+            </p>
+          </div>
+
+          <!-- Section 4 -->
+          <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80 hover:border-slate-300 transition-colors">
+            <div class="flex items-center justify-between mb-1.5">
+              <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                <span class="w-5 h-5 rounded-md bg-blue-100 text-blue-800 text-[11px] font-mono font-bold flex items-center justify-center">4</span>
+                <span>Intellectual Property</span>
+              </h4>
+              <span class="text-[10.5px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-slate-200/70 text-slate-700">Patras CEID Spin-Off</span>
+            </div>
+            <p class="text-slate-600 text-xs sm:text-[12.5px] leading-relaxed">
+              The core neural network architectures, edge quantization pipelines, and multimodal fusion algorithms are proprietary intellectual property of ZenithDx Technologies IKE (Academic Spin-Off, CEID University of Patras).
+            </p>
+          </div>
+        </div>
       </div>
 
       <!-- TAB 3: DPA -->
       <div id="legal-content-dpa" class="space-y-4 hidden">
-        <div class="p-4 rounded-2xl bg-emerald-50/60 border border-emerald-200/80 text-emerald-900">
-          <strong class="block font-bold mb-1 text-sm text-emerald-950">Zero Sub-Processors &bull; Zero Cross-Border Transfers</strong>
-          Because ZenithDx operates on physical local LAN appliances or hospital on-prem virtual machines, there are zero third-party cloud sub-processors and zero cross-border WAN data transfers.
+        <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-emerald-50/90 via-teal-50/50 to-white border border-emerald-200/80 text-emerald-950 shadow-xs">
+          <div class="flex items-center gap-2 font-bold text-sm text-emerald-950 mb-1.5">
+            <span class="material-symbols-outlined text-emerald-600 text-lg">hub</span>
+            <span>Zero Sub-Processors &bull; Zero Cross-Border Transfers</span>
+          </div>
+          <p class="text-xs sm:text-[13px] leading-relaxed text-emerald-900/90">
+            Because ZenithDx operates on physical local LAN appliances or hospital on-prem virtual machines, there are zero third-party cloud sub-processors and zero cross-border WAN data transfers.
+          </p>
         </div>
 
-        <h4 class="font-bold text-slate-800 text-sm mt-4">1. Technical &amp; Organizational Measures (TOMs)</h4>
-        <p>ZenithDx enforces local hardware-level security, role-based access control (RBAC), TLS 1.3 encrypted local socket communications, and AES-256 cryptographic storage at rest for configuration databases.</p>
+        <div class="grid grid-cols-1 gap-3 pt-1">
+          <!-- Section 1 -->
+          <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80 hover:border-slate-300 transition-colors">
+            <div class="flex items-center justify-between mb-1.5">
+              <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                <span class="w-5 h-5 rounded-md bg-emerald-100 text-emerald-800 text-[11px] font-mono font-bold flex items-center justify-center">1</span>
+                <span>Technical &amp; Organizational Measures (TOMs)</span>
+              </h4>
+              <span class="text-[10.5px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-slate-200/70 text-slate-700">GDPR Art. 32</span>
+            </div>
+            <p class="text-slate-600 text-xs sm:text-[12.5px] leading-relaxed">
+              ZenithDx enforces local hardware-level security, role-based access control (RBAC), TLS 1.3 encrypted local socket communications, and AES-256 cryptographic storage at rest for configuration databases.
+            </p>
+          </div>
 
-        <h4 class="font-bold text-slate-800 text-sm mt-3">2. Breach Notification &amp; Audit Rights</h4>
-        <p>The system provides automated local integrity monitoring. Institutional IT directors and DPOs maintain full audit authority over on-premise system registers without vendor dependency.</p>
+          <!-- Section 2 -->
+          <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80 hover:border-slate-300 transition-colors">
+            <div class="flex items-center justify-between mb-1.5">
+              <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                <span class="w-5 h-5 rounded-md bg-emerald-100 text-emerald-800 text-[11px] font-mono font-bold flex items-center justify-center">2</span>
+                <span>Breach Notification &amp; Audit Rights</span>
+              </h4>
+              <span class="text-[10.5px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-slate-200/70 text-slate-700">Independent DPO Auditing</span>
+            </div>
+            <p class="text-slate-600 text-xs sm:text-[12.5px] leading-relaxed">
+              The system provides automated local integrity monitoring. Institutional IT directors and DPOs maintain full audit authority over on-premise system registers without vendor dependency.
+            </p>
+          </div>
+
+          <!-- Section 3 -->
+          <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80 hover:border-slate-300 transition-colors">
+            <div class="flex items-center justify-between mb-1.5">
+              <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                <span class="w-5 h-5 rounded-md bg-emerald-100 text-emerald-800 text-[11px] font-mono font-bold flex items-center justify-center">3</span>
+                <span>Sub-Processor Disclosure &amp; Cloud Elimination</span>
+              </h4>
+              <span class="text-[10.5px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-slate-200/70 text-slate-700">Zero Cloud Sub-Processors</span>
+            </div>
+            <p class="text-slate-600 text-xs sm:text-[12.5px] leading-relaxed">
+              ZenithDx engages exactly zero (0) external sub-processors for diagnostic data handling. In the event of scheduled local firmware maintenance, updates are delivered via air-gapped cryptographic USB or local hospital staging repositories under institutional supervision.
+            </p>
+          </div>
+
+          <!-- Section 4 -->
+          <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80 hover:border-slate-300 transition-colors">
+            <div class="flex items-center justify-between mb-1.5">
+              <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                <span class="w-5 h-5 rounded-md bg-emerald-100 text-emerald-800 text-[11px] font-mono font-bold flex items-center justify-center">4</span>
+                <span>Data Return &amp; Deletion Sovereignty</span>
+              </h4>
+              <span class="text-[10.5px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-slate-200/70 text-slate-700">Hospital Custody</span>
+            </div>
+            <p class="text-slate-600 text-xs sm:text-[12.5px] leading-relaxed">
+              Upon conclusion of any institutional pilot agreement, no vendor data extraction or deletion protocol is required because no institutional clinical data resides outside the hospital's local storage infrastructure.
+            </p>
+          </div>
+        </div>
       </div>
 
     </div>
 
     <!-- Modal Footer -->
     <div class="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between">
-      <div class="text-[11px] text-slate-400 font-mono">
-        ZenithDx Technologies IKE &bull; TEE 174033 Verified
+      <div class="text-[11.5px] text-slate-500 font-medium flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+        <span>Local Air-Gapped Compliance &bull; EU Regulatory Alignment</span>
       </div>
-      <button onclick="closeLegalModal()" class="px-5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-all shadow-xs">
-        Close Framework
+      <button onclick="closeLegalModal()" class="px-5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-all shadow-xs cursor-pointer">
+        Close
       </button>
     </div>
   </div>
