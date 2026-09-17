@@ -400,103 +400,103 @@ body.intro-dismissed .stagger-metric-card-4 {
   <!-- ===================================================================== -->
   <!-- FULLSCREEN INTRO LANDING SCREEN (ZenithDX Brand Assembly Video)       -->
   <!-- ===================================================================== -->
-  <div id="intro-video-overlay" class="fixed inset-0 z-[999999] bg-white flex items-center justify-center select-none overflow-hidden transition-opacity duration-500 ease-out">
-    <div class="relative w-full h-full flex items-center justify-center cursor-pointer" onclick="handleLandingInteraction(event)">
-      
-      <!-- Video covering whole screen with seamless white blend, sharp poster, skipping blurry 0s frame -->
-      <video id="intro-video-element" poster="poster_zenith.jpg" class="w-full h-full max-h-[82vh] sm:max-h-none object-contain md:object-cover select-none" playsinline preload="auto">
-        <source src="ZenithDX_logo_data_assembly_anim.mp4#t=1.8" type="video/mp4">
-        <source src="ZenithDX_logo_data_assembly_anim…_20260916125532.mp4#t=1.8" type="video/mp4">
-      </video>
-
-      <!-- Direct Action Button: Enter Platform & Trigger Animations (Centered on mobile, right on desktop) -->
-      <button id="skip-intro-btn" onclick="event.stopPropagation(); dismissIntroVideo();" class="absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-10 z-30 w-[calc(100%-3rem)] sm:w-auto max-w-sm px-8 py-4 sm:py-3.5 rounded-full bg-slate-950/95 hover:bg-slate-900 text-white text-xs font-mono font-bold tracking-wider backdrop-blur-md border border-slate-700 hover:border-cyan-400 transition-all cursor-pointer shadow-[0_16px_40px_rgba(0,0,0,0.5)] flex items-center justify-center gap-2.5 group hover:scale-105 active:scale-95 text-center">
-        <span class="lang-en">ENTER THE PLATFORM</span>
-        <span class="lang-el hidden">ΕΙΣΟΔΟΣ ΣΤΗΝ ΠΛΑΤΦΟΡΜΑ</span>
-        <span class="material-symbols-outlined text-base transition-transform group-hover:translate-x-1 text-cyan-400">arrow_forward</span>
-      </button>
-
+    <div id="intro-video-overlay" class="fixed inset-0 z-[999999] w-full h-[100dvh] min-h-screen bg-white flex items-center justify-center select-none overflow-hidden transition-opacity duration-500 ease-out cursor-pointer" onclick="handleLandingInteraction(event)">
+      <div class="relative w-full h-full flex items-center justify-center">
+        
+        <!-- Seamless Fullscreen Video: 9:16 on mobile (fills 100% of mobile screen), 16:9 on desktop -->
+        <video id="intro-video-element" poster="poster_mobile_portrait.jpg" class="w-full h-full object-cover select-none" playsinline preload="auto">
+          <source id="intro-source-mobile" media="(max-width: 768px)" src="ZenithDX_mobile_portrait.mp4" type="video/mp4">
+          <source id="intro-source-desktop" media="(min-width: 769px)" src="ZenithDX_desktop.mp4" type="video/mp4">
+          <source src="ZenithDX_desktop.mp4" type="video/mp4">
+        </video>
+  
+        <!-- Action Button: Floating centrally at bottom on mobile, bottom-right on desktop -->
+        <div class="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-8 z-30 flex flex-col items-center gap-2">
+          <button id="skip-intro-btn" onclick="event.stopPropagation(); dismissIntroVideo();" class="px-7 sm:px-8 py-3.5 sm:py-4 rounded-full bg-slate-950/95 hover:bg-slate-900 text-white text-xs font-mono font-bold tracking-wider backdrop-blur-md border border-cyan-500/40 hover:border-cyan-400 transition-all cursor-pointer shadow-[0_16px_40px_rgba(8,145,178,0.3)] flex items-center justify-center gap-2.5 group hover:scale-105 active:scale-95 whitespace-nowrap">
+            <span class="lang-en">ENTER THE PLATFORM</span>
+            <span class="lang-el hidden">ΕΙΣΟΔΟΣ ΣΤΗΝ ΠΛΑΤΦΟΡΜΑ</span>
+            <span class="material-symbols-outlined text-base transition-transform group-hover:translate-x-1 text-cyan-400">arrow_forward</span>
+          </button>
+          <span class="text-[10px] sm:text-[11px] font-mono text-slate-400 select-none text-center">
+            <span class="lang-en">Tap anywhere to enter</span>
+            <span class="lang-el hidden">Πατήστε οπουδήποτε για είσοδο</span>
+          </span>
+        </div>
+  
+      </div>
     </div>
-  </div>
+  
+    <script>
+      // Fullscreen Intro Video, Sound & Entrance Animations Coordinator
+      window.handleLandingInteraction = function(event) {
+        const video = document.getElementById('intro-video-element');
+        if (video) {
+          video.muted = false;
+          video.volume = 1.0;
+          if (video.paused) {
+            video.play().catch(() => {});
+          }
+        }
+      };
+      window.triggerHeroAnimations = function() {
+        const heroEls = document.querySelectorAll(
+          '.hero-animate-title, .hero-animate-subtitle, .hero-animate-ctas, ' +
+          '.stagger-metric-card-1, .stagger-metric-card-2, .stagger-metric-card-3, .stagger-metric-card-4'
+        );
+        heroEls.forEach(el => {
+          el.style.animation = 'none';
+          el.offsetHeight; // Trigger browser reflow
+          el.style.animation = '';
+        });
+        document.body.classList.add('intro-dismissed');
+      };
+      window.dismissIntroVideo = function() {
+        const overlay = document.getElementById('intro-video-overlay');
+        if (!overlay || overlay.dataset.dismissed === 'true') return;
+        overlay.dataset.dismissed = 'true';
+        overlay.style.transition = 'opacity 0.45s ease-out';
+        overlay.classList.add('opacity-0', 'pointer-events-none');
+        document.body.classList.remove('overflow-hidden');
+  
+        // Trigger animations immediately as platform reveals!
+        window.triggerHeroAnimations();
+  
+        setTimeout(() => {
+          overlay.style.display = 'none';
+          const video = document.getElementById('intro-video-element');
+          if (video) video.pause();
+        }, 500);
+      };
+  
+      (function() {
+        const overlay = document.getElementById('intro-video-overlay');
+        const video = document.getElementById('intro-video-element');
+        if (!overlay || !video) return;
 
-  <script>
-    // Fullscreen Intro Video, Sound & Entrance Animations Coordinator
-        window.handleLandingInteraction = function(event) {
-      const video = document.getElementById('intro-video-element');
-      if (video) {
+        const isMobile = window.innerWidth <= 768;
+        video.poster = isMobile ? 'poster_mobile_portrait.jpg' : 'poster_zenith.jpg';
+        if (isMobile) {
+          video.src = 'ZenithDX_mobile_portrait.mp4';
+        } else {
+          video.src = 'ZenithDX_desktop.mp4';
+        }
+        video.load();
+
+        document.body.classList.add('overflow-hidden');
+
+        // Sound is ALWAYS ON
         video.muted = false;
         video.volume = 1.0;
-        if (video.paused) {
-          video.play().catch(() => {});
+
+        // Play with sound immediately
+        const p = video.play();
+        if (p !== undefined) {
+          p.catch((err) => {
+            // If browser autoplay policy requires mute first, start video and unmute on first gesture
+            video.muted = true;
+            video.play().catch(() => {});
+          });
         }
-      }
-    };
-    window.triggerHeroAnimations = function() {
-      const heroEls = document.querySelectorAll(
-        '.hero-animate-title, .hero-animate-subtitle, .hero-animate-ctas, ' +
-        '.stagger-metric-card-1, .stagger-metric-card-2, .stagger-metric-card-3, .stagger-metric-card-4'
-      );
-      heroEls.forEach(el => {
-        el.style.animation = 'none';
-        el.offsetHeight; // Trigger browser reflow
-        el.style.animation = '';
-      });
-      document.body.classList.add('intro-dismissed');
-    };
-    window.dismissIntroVideo = function() {
-      const overlay = document.getElementById('intro-video-overlay');
-      if (!overlay || overlay.dataset.dismissed === 'true') return;
-      overlay.dataset.dismissed = 'true';
-      overlay.style.transition = 'opacity 0.45s ease-out';
-      overlay.classList.add('opacity-0', 'pointer-events-none');
-      document.body.classList.remove('overflow-hidden');
-
-      // Trigger animations immediately as platform reveals!
-      window.triggerHeroAnimations();
-
-      setTimeout(() => {
-        overlay.style.display = 'none';
-        const video = document.getElementById('intro-video-element');
-        if (video) video.pause();
-      }, 500);
-    };
-
-    (function() {
-      const overlay = document.getElementById('intro-video-overlay');
-      const video = document.getElementById('intro-video-element');
-      if (!overlay || !video) return;
-
-      document.body.classList.add('overflow-hidden');
-
-      // Sound is ALWAYS ON
-      video.muted = false;
-      video.volume = 1.0;
-
-      // Skip the blurry first second: starts cleanly at 1.05s
-      function enforceCleanStartTime() {
-        if (video && video.currentTime < 1.8) {
-          try {
-            video.currentTime = 1.8;
-          } catch(e) {}
-        }
-      }
-
-      video.addEventListener('loadedmetadata', enforceCleanStartTime);
-      video.addEventListener('canplay', enforceCleanStartTime);
-      video.addEventListener('play', enforceCleanStartTime);
-
-      // Play with sound immediately
-      const p = video.play();
-      if (p !== undefined) {
-        p.then(() => {
-          enforceCleanStartTime();
-        }).catch((err) => {
-          // If browser policy blocks sound before interaction, play and unmute on ANY user gesture
-          video.muted = true;
-          video.play();
-          enforceCleanStartTime();
-        });
-      }
 
       // Ensure sound is unmuted and active on any user action
       function ensureSoundActive() {
