@@ -443,6 +443,21 @@ body.intro-dismissed .stagger-metric-card-4 {
   animation: gradientShift 5s ease infinite;
 }
 
+@keyframes testimonialFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.testimonial-progress-fill {
+  transition: width 0.08s linear;
+}
+
 </style>
 
   <!-- Consolidated Semantic Graph Schema.org (E-E-A-T Medical AI & SaMD Standards) -->
@@ -1545,8 +1560,8 @@ body.intro-dismissed .stagger-metric-card-4 {
             </defs>
           </svg>
 
-                    <!-- Interactive Testimonial Cards Container (5 Slides) -->
-          <div class="relative z-10 max-w-3xl mx-auto">
+          <!-- Interactive Testimonial Cards Container (5 Slides) -->
+          <div id="testimonial-carousel-container" class="relative z-10 max-w-3xl mx-auto">
             
             <!-- Slide 0: Dr. Katerina Podara -->
             <div id="testimonial-slide-0" class="testimonial-slide transition-all duration-500 bg-white rounded-3xl p-8 sm:p-12 shadow-2xl border border-slate-100">
@@ -1657,16 +1672,28 @@ body.intro-dismissed .stagger-metric-card-4 {
 
             <!-- Slide Navigation Controls (5 Indicators + Prev/Next buttons) -->
             <div class="flex items-center justify-center gap-3 mt-8">
-              <button onclick="prevTestimonialSlide()" class="w-8 h-8 rounded-full bg-white/80 hover:bg-white text-slate-700 shadow-sm flex items-center justify-center cursor-pointer transition-all mr-2" aria-label="Previous testimonial">
-                <span class="material-symbols-outlined text-[18px]">chevron_left</span>
+              <button onclick="prevTestimonialSlide()" id="testimonial-prev-btn" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/95 hover:bg-teal-50 text-slate-700 hover:text-teal-700 border border-slate-200/90 shadow-sm hover:shadow-md flex items-center justify-center cursor-pointer transition-all active:scale-95 mr-2" aria-label="Previous testimonial">
+                <span class="material-symbols-outlined text-[20px]">chevron_left</span>
               </button>
-              <button onclick="setTestimonialSlide(0)" id="testimonial-dot-0" class="w-10 h-2.5 rounded-full bg-teal-600 transition-all cursor-pointer" aria-label="Dr. Katerina Podara"></button>
-              <button onclick="setTestimonialSlide(1)" id="testimonial-dot-1" class="w-3 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all cursor-pointer" aria-label="Dr. Ioanna Marlafeka"></button>
-              <button onclick="setTestimonialSlide(2)" id="testimonial-dot-2" class="w-3 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all cursor-pointer" aria-label="Prof. Christos Makris"></button>
-              <button onclick="setTestimonialSlide(3)" id="testimonial-dot-3" class="w-3 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all cursor-pointer" aria-label="Anonymous Clinician P5"></button>
-              <button onclick="setTestimonialSlide(4)" id="testimonial-dot-4" class="w-3 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all cursor-pointer" aria-label="Anonymous Clinician P2"></button>
-              <button onclick="nextTestimonialSlide()" class="w-8 h-8 rounded-full bg-white/80 hover:bg-white text-slate-700 shadow-sm flex items-center justify-center cursor-pointer transition-all ml-2" aria-label="Next testimonial">
-                <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+              <div id="testimonial-dots-container" class="flex items-center gap-2.5">
+                <button onclick="setTestimonialSlide(0)" id="testimonial-dot-0" class="relative overflow-hidden w-11 sm:w-12 h-2.5 rounded-full bg-teal-100 transition-all duration-300 cursor-pointer" aria-label="Dr. Katerina Podara">
+                  <span id="testimonial-progress-0" class="testimonial-progress-fill absolute inset-0 bg-teal-600 rounded-full transition-all duration-300"></span>
+                </button>
+                <button onclick="setTestimonialSlide(1)" id="testimonial-dot-1" class="relative overflow-hidden w-3 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all duration-300 cursor-pointer" aria-label="Dr. Ioanna Marlafeka">
+                  <span id="testimonial-progress-1" class="testimonial-progress-fill absolute inset-0 bg-transparent rounded-full transition-all duration-300"></span>
+                </button>
+                <button onclick="setTestimonialSlide(2)" id="testimonial-dot-2" class="relative overflow-hidden w-3 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all duration-300 cursor-pointer" aria-label="Prof. Christos Makris">
+                  <span id="testimonial-progress-2" class="testimonial-progress-fill absolute inset-0 bg-transparent rounded-full transition-all duration-300"></span>
+                </button>
+                <button onclick="setTestimonialSlide(3)" id="testimonial-dot-3" class="relative overflow-hidden w-3 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all duration-300 cursor-pointer" aria-label="Anonymous Clinician P5">
+                  <span id="testimonial-progress-3" class="testimonial-progress-fill absolute inset-0 bg-transparent rounded-full transition-all duration-300"></span>
+                </button>
+                <button onclick="setTestimonialSlide(4)" id="testimonial-dot-4" class="relative overflow-hidden w-3 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all duration-300 cursor-pointer" aria-label="Anonymous Clinician P2">
+                  <span id="testimonial-progress-4" class="testimonial-progress-fill absolute inset-0 bg-transparent rounded-full transition-all duration-300"></span>
+                </button>
+              </div>
+              <button onclick="nextTestimonialSlide()" id="testimonial-next-btn" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/95 hover:bg-teal-50 text-slate-700 hover:text-teal-700 border border-slate-200/90 shadow-sm hover:shadow-md flex items-center justify-center cursor-pointer transition-all active:scale-95 ml-2" aria-label="Next testimonial">
+                <span class="material-symbols-outlined text-[20px]">chevron_right</span>
               </button>
             </div>
 
@@ -11158,36 +11185,156 @@ window.handleCTAContactSubmit = function(event) {
 };
 
 
-  function setTestimonialSlide(idx) {
-    currentTestimonialSlide = (idx + totalTestimonialSlides) % totalTestimonialSlides;
+  // ============================================================================
+  // INTERACTIVE TESTIMONIAL CAROUSEL (AUTOPLAY, ARROWS & PROGRESS INDICATOR)
+  // ============================================================================
+  let currentTestimonialSlide = 0;
+  const totalTestimonialSlides = 5;
+  const TESTIMONIAL_SLIDE_DURATION = 6000; // 6 seconds per testimonial
+  let testimonialProgressMs = 0;
+  let isTestimonialHovered = false;
+  let testimonialTimerId = null;
+
+  const testimonialMeta = [
+    { name: "Dr. Katerina Podara", role: "Resident Physician in General Medicine" },
+    { name: "Dr. Ioanna Marlafeka", role: "Resident Physician in Internal Medicine, MSc, PhD(c)" },
+    { name: "Prof. Christos Makris", role: "Associate Professor, University of Patras" },
+    { name: "Anonymous Clinician P5", role: "Resident Physician in Internal & Emergency Medicine" },
+    { name: "Anonymous Clinician P2", role: "Emergency Department Attending Physician" }
+  ];
+
+  function updateTestimonialUI() {
     for (let i = 0; i < totalTestimonialSlides; i++) {
       const slide = document.getElementById('testimonial-slide-' + i);
       const dot = document.getElementById('testimonial-dot-' + i);
-      if (slide && dot) {
-        if (i === currentTestimonialSlide) {
+      const progress = document.getElementById('testimonial-progress-' + i);
+      const isActive = (i === currentTestimonialSlide);
+
+      if (slide) {
+        if (isActive) {
           slide.classList.remove('hidden');
-          dot.className = 'w-10 h-2.5 rounded-full bg-teal-600 transition-all cursor-pointer';
+          slide.style.animation = 'testimonialFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards';
         } else {
           slide.classList.add('hidden');
-          dot.className = 'w-3 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all cursor-pointer';
+          slide.style.animation = '';
+        }
+      }
+
+      if (dot) {
+        if (isActive) {
+          dot.className = 'relative overflow-hidden w-11 sm:w-12 h-2.5 rounded-full bg-teal-100 transition-all duration-300 cursor-pointer';
+          if (progress) {
+            progress.className = 'testimonial-progress-fill absolute inset-0 bg-teal-600 rounded-full';
+            const pct = Math.min(100, (testimonialProgressMs / TESTIMONIAL_SLIDE_DURATION) * 100);
+            progress.style.width = pct + '%';
+          }
+        } else {
+          dot.className = 'relative overflow-hidden w-3 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all duration-300 cursor-pointer';
+          if (progress) {
+            progress.className = 'testimonial-progress-fill absolute inset-0 bg-transparent rounded-full';
+            progress.style.width = '0%';
+          }
         }
       }
     }
+
     const numEl = document.getElementById('current-slide-num');
     const numElGr = document.getElementById('current-slide-num-el');
     if (numEl) numEl.textContent = currentTestimonialSlide + 1;
     if (numElGr) numElGr.textContent = currentTestimonialSlide + 1;
   }
-  function nextTestimonialSlide() {
-    setTestimonialSlide(currentTestimonialSlide + 1);
+
+  function setTestimonialSlide(idx, userInitiated = true) {
+    currentTestimonialSlide = (idx + totalTestimonialSlides) % totalTestimonialSlides;
+    window.currentTestimonialSlide = currentTestimonialSlide;
+    testimonialProgressMs = 0;
+    updateTestimonialUI();
+
+    if (userInitiated && typeof window.trackZenithEvent === 'function') {
+      const meta = testimonialMeta[currentTestimonialSlide] || {};
+      window.trackZenithEvent('testimonial_view', {
+        slide_index: currentTestimonialSlide + 1,
+        clinician: meta.name || '',
+        interaction_type: 'manual_navigation'
+      });
+    }
   }
-  function prevTestimonialSlide() {
-    setTestimonialSlide(currentTestimonialSlide - 1);
+
+  function nextTestimonialSlide(userInitiated = true) {
+    setTestimonialSlide(currentTestimonialSlide + 1, userInitiated);
   }
-  // Auto advance testimonial slides every 8 seconds
-  setInterval(() => {
-    nextTestimonialSlide();
-  }, 8000);
+
+  function prevTestimonialSlide(userInitiated = true) {
+    setTestimonialSlide(currentTestimonialSlide - 1, userInitiated);
+  }
+
+  function initTestimonialAutoplay() {
+    if (testimonialTimerId) clearInterval(testimonialTimerId);
+    const TICK_INTERVAL = 50;
+
+    testimonialTimerId = setInterval(() => {
+      if (isTestimonialHovered) return;
+
+      testimonialProgressMs += TICK_INTERVAL;
+      if (testimonialProgressMs >= TESTIMONIAL_SLIDE_DURATION) {
+        nextTestimonialSlide(false);
+      } else {
+        const activeProgress = document.getElementById('testimonial-progress-' + currentTestimonialSlide);
+        if (activeProgress) {
+          const pct = Math.min(100, (testimonialProgressMs / TESTIMONIAL_SLIDE_DURATION) * 100);
+          activeProgress.style.width = pct + '%';
+        }
+      }
+    }, TICK_INTERVAL);
+  }
+
+  function setupTestimonialEventListeners() {
+    const container = document.getElementById('testimonial-carousel-container');
+    if (container) {
+      container.addEventListener('mouseenter', () => { isTestimonialHovered = true; });
+      container.addEventListener('mouseleave', () => { isTestimonialHovered = false; });
+    }
+
+    const prevBtn = document.getElementById('testimonial-prev-btn');
+    const nextBtn = document.getElementById('testimonial-next-btn');
+    if (prevBtn) {
+      prevBtn.onclick = (e) => {
+        e.preventDefault();
+        prevTestimonialSlide(true);
+      };
+    }
+    if (nextBtn) {
+      nextBtn.onclick = (e) => {
+        e.preventDefault();
+        nextTestimonialSlide(true);
+      };
+    }
+
+    for (let d = 0; d < totalTestimonialSlides; d++) {
+      const dotBtn = document.getElementById('testimonial-dot-' + d);
+      if (dotBtn) {
+        dotBtn.onclick = (e) => {
+          e.preventDefault();
+          setTestimonialSlide(d, true);
+        };
+      }
+    }
+
+    updateTestimonialUI();
+    initTestimonialAutoplay();
+  }
+
+  window.currentTestimonialSlide = currentTestimonialSlide;
+  window.totalTestimonialSlides = totalTestimonialSlides;
+  window.setTestimonialSlide = setTestimonialSlide;
+  window.nextTestimonialSlide = nextTestimonialSlide;
+  window.prevTestimonialSlide = prevTestimonialSlide;
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupTestimonialEventListeners);
+  } else {
+    setupTestimonialEventListeners();
+  }
 
 
   // Interactive Physician Cohort Histogram (Ιστόγραμμα) Controls
