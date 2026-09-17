@@ -7,6 +7,33 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>ZenithDx - Emergency Diagnostic AI Copilot</title>
+
+  <!-- Google Analytics 4 (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    // Configure GA4 (replace G-XXXXXXXXXX with your active GA4 Measurement ID)
+    window.GA4_MEASUREMENT_ID = 'G-XXXXXXXXXX';
+    gtag('config', window.GA4_MEASUREMENT_ID, {
+      send_page_view: true,
+      cookie_flags: 'SameSite=None;Secure',
+      anonymize_ip: true
+    });
+
+    // Centralized safe analytics tracking dispatcher
+    window.trackZenithEvent = function(eventName, eventParams) {
+      try {
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', eventName, eventParams || {});
+        }
+      } catch (err) {
+        console.warn('[GA4 Analytics]', eventName, eventParams, err);
+      }
+    };
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&display=swap" rel="stylesheet">
@@ -458,6 +485,17 @@ body.intro-dismissed .stagger-metric-card-4 {
         overlay.classList.add('opacity-0', 'pointer-events-none');
         document.body.classList.remove('overflow-hidden');
   
+        // Track GA4 engagement: visitor entering the platform
+        if (typeof window.trackZenithEvent === 'function') {
+          const video = document.getElementById('intro-video-element');
+          window.trackZenithEvent('enter_platform', {
+            event_category: 'onboarding',
+            event_label: 'Landing Intro Dismissed',
+            watch_seconds: video ? Math.round(video.currentTime) : 0,
+            device_mode: (window.innerWidth <= 768) ? 'mobile' : 'desktop'
+          });
+        }
+
         // Trigger animations immediately as platform reveals!
         window.triggerHeroAnimations();
   
@@ -9979,6 +10017,16 @@ function navigateTo(pageId) {
     }
   });
 
+  // Track GA4 SPA virtual page view and section interaction
+  if (typeof window.trackZenithEvent === 'function') {
+    window.trackZenithEvent('page_view', {
+      page_title: 'ZenithDx | ' + pageId.charAt(0).toUpperCase() + pageId.slice(1),
+      page_location: window.location.origin + window.location.pathname + '#' + pageId,
+      page_path: '/' + pageId,
+      section_name: pageId
+    });
+  }
+
   if (pageId === 'tech' && typeof initHoloPassport === 'function') setTimeout(initHoloPassport, 100);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -10078,6 +10126,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (enBtn) enBtn.className = 'px-3 py-1 rounded-full bg-white text-slate-900 shadow-sm transition-all flex items-center gap-1';
       if (elBtn) elBtn.className = 'px-3 py-1 rounded-full text-slate-500 hover:text-slate-900 transition-all flex items-center gap-1';
       try { localStorage.setItem('zenith_lang', 'en'); } catch(e) {}
+    }
+
+    // Track language toggle in GA4
+    if (typeof window.trackZenithEvent === 'function') {
+      window.trackZenithEvent('language_switch', {
+        selected_language: lang
+      });
     }
   }
 
@@ -10710,6 +10765,14 @@ Website: https://zenithdx.ai/#page-solutions
   document.body.appendChild(link);
   link.click();
   link.remove();
+
+  if (typeof window.trackZenithEvent === 'function') {
+    window.trackZenithEvent('download_cfo_report', {
+      visits: visits,
+      projected_savings: savings,
+      roi: roi
+    });
+  }
 }
 
 
@@ -10750,6 +10813,15 @@ async function sendZenithEmail(formCategory, formData, submitBtn, successCallbac
     form_category: formCategory,
     ...formData
   };
+
+  if (typeof window.trackZenithEvent === 'function') {
+    window.trackZenithEvent('generate_lead', {
+      form_category: formCategory,
+      hospital: formData.hospital || '',
+      country: formData.country || '',
+      role: formData.primaryRole || formData.role || ''
+    });
+  }
 
   try {
     const res = await fetch("https://formsubmit.co/ajax/zenithdxcopilot@gmail.com", {
@@ -11163,6 +11235,150 @@ window.handleCTAContactSubmit = function(event) {
     </div>
   </div>
 </div>
+
+<!-- ============================================================================== -->
+<!-- GA4 ENGAGEMENT, SCROLL DEPTH & INTERACTION TRACKING SCRIPT                     -->
+<!-- ============================================================================== -->
+<script>
+(function() {
+  // 1. ACTIVE SESSION DURATION & ENGAGEMENT MILESTONES
+  // Measures actual focused time (stops if tab is hidden/minimized)
+  let activeSeconds = 0;
+  const milestonesFired = new Set();
+  const milestones = [15, 30, 60, 120, 300, 600]; // 15s, 30s, 1m, 2m, 5m, 10m
+
+  setInterval(function() {
+    if (!document.hidden) {
+      activeSeconds++;
+      milestones.forEach(function(sec) {
+        if (activeSeconds >= sec && !milestonesFired.has(sec)) {
+          milestonesFired.add(sec);
+          if (typeof window.trackZenithEvent === 'function') {
+            window.trackZenithEvent('engagement_milestone', {
+              engagement_time_seconds: sec,
+              active_page: window.location.hash || '#home'
+            });
+          }
+        }
+      });
+    }
+  }, 1000);
+
+  // 2. SCROLL DEPTH TRACKING (25%, 50%, 75%, 90%)
+  const scrollMilestones = [25, 50, 75, 90];
+  const scrollMilestonesFired = new Set();
+
+  function evaluateScrollDepth() {
+    const docEl = document.documentElement;
+    const body = document.body;
+    const scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop || 0;
+    const scrollHeight = Math.max(docEl.scrollHeight, body.scrollHeight) - window.innerHeight;
+    if (scrollHeight <= 0) return;
+
+    const scrollPercentage = Math.min(100, Math.round((scrollTop / scrollHeight) * 100));
+
+    scrollMilestones.forEach(function(depth) {
+      if (scrollPercentage >= depth && !scrollMilestonesFired.has(depth)) {
+        scrollMilestonesFired.add(depth);
+        if (typeof window.trackZenithEvent === 'function') {
+          window.trackZenithEvent('scroll_depth', {
+            percent_scrolled: depth,
+            active_page: window.location.hash || '#home'
+          });
+        }
+      }
+    });
+  }
+
+  let scrollThrottleTimer = null;
+  window.addEventListener('scroll', function() {
+    if (!scrollThrottleTimer) {
+      scrollThrottleTimer = setTimeout(function() {
+        evaluateScrollDepth();
+        scrollThrottleTimer = null;
+      }, 250);
+    }
+  }, { passive: true });
+
+  // 3. CTA & OUTBOUND INTERACTION TRACKING
+  document.addEventListener('click', function(e) {
+    const target = e.target.closest('a, button');
+    if (!target) return;
+
+    const href = target.getAttribute('href') || '';
+    const text = (target.textContent || '').trim().substring(0, 50);
+
+    // Email clicks
+    if (href.startsWith('mailto:')) {
+      if (typeof window.trackZenithEvent === 'function') {
+        window.trackZenithEvent('contact_click', {
+          contact_type: 'email',
+          target_value: href.replace('mailto:', ''),
+          label: text
+        });
+      }
+      return;
+    }
+
+    // Phone clicks
+    if (href.startsWith('tel:')) {
+      if (typeof window.trackZenithEvent === 'function') {
+        window.trackZenithEvent('contact_click', {
+          contact_type: 'phone',
+          target_value: href.replace('tel:', ''),
+          label: text
+        });
+      }
+      return;
+    }
+
+    // Outbound link clicks
+    if (href.startsWith('http') && !href.includes(window.location.hostname)) {
+      if (typeof window.trackZenithEvent === 'function') {
+        window.trackZenithEvent('outbound_click', {
+          destination_url: href,
+          link_text: text
+        });
+      }
+      return;
+    }
+
+    // Primary Call To Action (CTA) clicks
+    const isCta = target.classList.contains('btn-cta') || 
+                  target.closest('.cta-button') || 
+                  target.getAttribute('onclick')?.includes('openPilotModal') ||
+                  target.getAttribute('onclick')?.includes('openCFOModal') ||
+                  target.getAttribute('onclick')?.includes('navigateTo');
+
+    if (isCta) {
+      if (typeof window.trackZenithEvent === 'function') {
+        window.trackZenithEvent('cta_click', {
+          button_text: text,
+          action_target: target.getAttribute('onclick') || href || 'unknown',
+          current_page: window.location.hash || '#home'
+        });
+      }
+    }
+  }, { passive: true });
+
+  // 4. ROI CALCULATOR INTERACTION TRACKING (Debounced)
+  let roiDebounceTimer = null;
+  const roiInputs = document.querySelectorAll('#roi-visits-slider, #roi-error-slider, #roi-cloud-slider');
+  roiInputs.forEach(function(input) {
+    input.addEventListener('input', function() {
+      clearTimeout(roiDebounceTimer);
+      roiDebounceTimer = setTimeout(function() {
+        if (typeof window.trackZenithEvent === 'function') {
+          window.trackZenithEvent('roi_calculator_interact', {
+            slider_id: input.id,
+            slider_value: input.value
+          });
+        }
+      }, 1000);
+    });
+  });
+})();
+</script>
 
 </body>
 </html>
