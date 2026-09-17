@@ -48,6 +48,18 @@
     };
   </script>
   <style>
+    /* Mobile-first viewport stability */
+    html, body {
+      overflow-x: hidden !important;
+      max-width: 100vw;
+      width: 100%;
+    }
+    @media (max-width: 640px) {
+      input, select, textarea {
+        font-size: 16px !important;
+      }
+    }
+
     
 /* Professional Cyan Medical Tech Keyframes & Animations */
 @keyframes floatSlow {
@@ -377,7 +389,7 @@ body.intro-dismissed .stagger-metric-card-4 {
 
 </style>
 </head>
-<body class="bg-white text-slate-900 antialiased pt-24">
+<body class="bg-white text-slate-900 antialiased pt-20 sm:pt-24">
   <!-- ===================================================================== -->
   <!-- ===================================================================== -->
   <!-- ADVANCED CINEMATIC INTRO LANDING SCREEN (ZenithDX Brand Assembly)     -->
@@ -392,13 +404,13 @@ body.intro-dismissed .stagger-metric-card-4 {
     <div class="relative w-full h-full flex items-center justify-center cursor-pointer" onclick="handleLandingInteraction(event)">
       
       <!-- Video covering whole screen with seamless white blend, sharp poster, skipping blurry 0s frame -->
-      <video id="intro-video-element" poster="frame_1.0s.jpg" class="w-full h-full object-contain md:object-cover select-none" playsinline preload="auto">
-        <source src="ZenithDX_logo_data_assembly_anim.mp4#t=1.0" type="video/mp4">
-        <source src="ZenithDX_logo_data_assembly_anim…_20260916125532.mp4#t=1.0" type="video/mp4">
+      <video id="intro-video-element" poster="poster_zenith.jpg" class="w-full h-full max-h-[82vh] sm:max-h-none object-contain md:object-cover select-none" playsinline preload="auto">
+        <source src="ZenithDX_logo_data_assembly_anim.mp4#t=1.8" type="video/mp4">
+        <source src="ZenithDX_logo_data_assembly_anim…_20260916125532.mp4#t=1.8" type="video/mp4">
       </video>
 
-      <!-- Direct Action Button: Enter Platform & Trigger Animations -->
-      <button id="skip-intro-btn" onclick="event.stopPropagation(); dismissIntroVideo();" class="absolute bottom-8 right-8 z-30 px-8 py-3.5 rounded-full bg-slate-950/95 hover:bg-slate-900 text-white text-xs font-mono font-bold tracking-wider backdrop-blur-md border border-slate-700 hover:border-cyan-400 transition-all cursor-pointer shadow-[0_12px_35px_rgba(0,0,0,0.5)] flex items-center gap-2.5 group hover:scale-105 active:scale-95">
+      <!-- Direct Action Button: Enter Platform & Trigger Animations (Centered on mobile, right on desktop) -->
+      <button id="skip-intro-btn" onclick="event.stopPropagation(); dismissIntroVideo();" class="absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-10 z-30 w-[calc(100%-3rem)] sm:w-auto max-w-sm px-8 py-4 sm:py-3.5 rounded-full bg-slate-950/95 hover:bg-slate-900 text-white text-xs font-mono font-bold tracking-wider backdrop-blur-md border border-slate-700 hover:border-cyan-400 transition-all cursor-pointer shadow-[0_16px_40px_rgba(0,0,0,0.5)] flex items-center justify-center gap-2.5 group hover:scale-105 active:scale-95 text-center">
         <span class="lang-en">ENTER THE PLATFORM</span>
         <span class="lang-el hidden">ΕΙΣΟΔΟΣ ΣΤΗΝ ΠΛΑΤΦΟΡΜΑ</span>
         <span class="material-symbols-outlined text-base transition-transform group-hover:translate-x-1 text-cyan-400">arrow_forward</span>
@@ -409,6 +421,16 @@ body.intro-dismissed .stagger-metric-card-4 {
 
   <script>
     // Fullscreen Intro Video, Sound & Entrance Animations Coordinator
+        window.handleLandingInteraction = function(event) {
+      const video = document.getElementById('intro-video-element');
+      if (video) {
+        video.muted = false;
+        video.volume = 1.0;
+        if (video.paused) {
+          video.play().catch(() => {});
+        }
+      }
+    };
     window.triggerHeroAnimations = function() {
       const heroEls = document.querySelectorAll(
         '.hero-animate-title, .hero-animate-subtitle, .hero-animate-ctas, ' +
@@ -452,9 +474,9 @@ body.intro-dismissed .stagger-metric-card-4 {
 
       // Skip the blurry first second: starts cleanly at 1.05s
       function enforceCleanStartTime() {
-        if (video && video.currentTime < 1.05) {
+        if (video && video.currentTime < 1.8) {
           try {
-            video.currentTime = 1.05;
+            video.currentTime = 1.8;
           } catch(e) {}
         }
       }
@@ -514,10 +536,10 @@ body.intro-dismissed .stagger-metric-card-4 {
   <header id="global-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
   <!-- Main Navigation Bar -->
   <div class="bg-white/95 backdrop-blur-xl border-b border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
-    <div class="max-w-[1240px] mx-auto px-4 lg:px-8 h-24 flex items-center justify-between">
+    <div class="max-w-[1240px] mx-auto px-4 lg:px-8 h-20 sm:h-24 flex items-center justify-between">
       <!-- Big Logo Image (Clickable to Home) -->
       <button class="flex items-center group nav-page-btn cursor-pointer py-1" data-page="home" onclick="navigateTo('home')" title="ZenithDx - Return to Home" aria-label="ZenithDx Home">
-        <img src="logo.png" alt="ZenithDx Logo" class="h-16 sm:h-18 md:h-[76px] lg:h-[82px] w-auto object-contain group-hover:scale-105 transition-all duration-300 drop-shadow-xs" />
+        <img src="logo.png" alt="ZenithDx Logo" class="h-14 sm:h-18 md:h-[76px] lg:h-[82px] w-auto object-contain group-hover:scale-105 transition-all duration-300 drop-shadow-xs" />
       </button>
 
       <!-- Navigation Links -->
@@ -772,15 +794,15 @@ body.intro-dismissed .stagger-metric-card-4 {
     </div>
 
     <!-- Grand Visual Container with Multi-Layered Rotating Halo, Concentric Radar Rings & Glowing Pedestal -->
-    <div class="relative w-full max-w-6xl mx-auto flex items-end justify-center mt-8 sm:mt-12 lg:mt-16">
+    <div class="relative w-full max-w-6xl mx-auto flex items-end justify-center mt-8 sm:mt-12 lg:mt-16 overflow-hidden sm:overflow-visible">
 
       <!-- 1. Central Ambient Luminous Halo (Deep Glow) -->
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] sm:w-[680px] lg:w-[820px] h-[550px] sm:h-[680px] lg:h-[820px] rounded-full bg-gradient-to-tr from-cyan-400/25 via-teal-300/35 to-sky-300/25 blur-3xl pointer-events-none animate-hero-aura -z-20"></div>
 
-      <!-- 2. Concentric AI Diagnostic Rings (Rotating Tech Halo) -->
-      <div class="absolute top-1/2 left-1/2 w-[480px] sm:w-[620px] lg:w-[750px] h-[480px] sm:h-[620px] lg:h-[750px] rounded-full border border-cyan-400/20 border-dashed animate-halo-spin pointer-events-none -z-10"></div>
-      <div class="absolute top-1/2 left-1/2 w-[390px] sm:w-[500px] lg:w-[620px] h-[390px] sm:h-[500px] lg:h-[620px] rounded-full border border-teal-300/30 animate-halo-spin-reverse pointer-events-none -z-10"></div>
-      <div class="absolute top-1/2 left-1/2 w-[280px] sm:w-[380px] lg:w-[480px] h-[280px] sm:h-[380px] lg:h-[480px] rounded-full bg-gradient-to-b from-cyan-100/40 via-teal-50/20 to-transparent border border-cyan-200/40 animate-hero-pulse pointer-events-none -z-10"></div>
+      <!-- 2. Concentric AI Diagnostic Rings (Rotating Tech Halo) - Centered with -translate -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[500px] lg:w-[750px] h-[320px] sm:h-[500px] lg:h-[750px] rounded-full border border-cyan-400/20 border-dashed animate-halo-spin pointer-events-none -z-10"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px] sm:w-[400px] lg:w-[620px] h-[260px] sm:h-[400px] lg:h-[620px] rounded-full border border-teal-300/30 animate-halo-spin-reverse pointer-events-none -z-10"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] sm:w-[300px] lg:w-[480px] h-[200px] sm:h-[300px] lg:h-[480px] rounded-full bg-gradient-to-b from-cyan-100/40 via-teal-50/20 to-transparent border border-cyan-200/40 animate-hero-pulse pointer-events-none -z-10"></div>
 
       <!-- 3. Glassmorphic Radial Light Pillar & Pedestal Arch -->
       <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[92%] max-w-4xl h-36 rounded-[100%] bg-gradient-to-r from-cyan-500/20 via-teal-400/40 to-cyan-500/20 blur-2xl pointer-events-none -z-10"></div>
@@ -788,7 +810,7 @@ body.intro-dismissed .stagger-metric-card-4 {
 
       <!-- 4. Grand Clinicians Hero Image (Enlarged, Centered, Floating) -->
       <div class="relative z-10 w-full flex justify-center items-end animate-float-slow">
-        <img src="image.png" alt="ZenithDx Emergency Clinical AI Team" class="w-auto h-[540px] sm:h-[660px] md:h-[740px] lg:h-[820px] xl:h-[870px] max-w-full object-contain object-bottom pointer-events-none drop-shadow-[0_25px_50px_rgba(8,145,178,0.22)] select-none transition-all duration-700 hover:scale-[1.02]" />
+        <img src="image.png" alt="ZenithDx Emergency Clinical AI Team" class="w-auto h-[380px] sm:h-[560px] md:h-[700px] lg:h-[820px] xl:h-[870px] max-w-full object-contain object-bottom pointer-events-none drop-shadow-[0_25px_50px_rgba(8,145,178,0.22)] select-none transition-all duration-700 hover:scale-[1.02]" />
       </div>
 
     </div>
@@ -7893,8 +7915,18 @@ body.intro-dismissed .stagger-metric-card-4 {
 
         
 
-        <!-- Desktop Mountain Roadmap Infographic (Visible on lg+) -->
-        <div class="hidden lg:block relative w-full" style="min-height: 1080px;">
+        <!-- Mobile Stage Quick Selector Pills (Interactive for all phones) -->
+        <div class="block lg:hidden mb-3 px-1">
+          <div class="flex items-center justify-between gap-1.5 p-1.5 rounded-2xl bg-white border border-slate-200/90 shadow-xs overflow-x-auto text-[11px] font-mono font-bold">
+            <button type="button" onclick="jumpToMtnMilestone(0)" class="mtn-quick-btn flex-1 py-1.5 px-2 rounded-xl transition-all whitespace-nowrap text-center bg-pink-50 text-pink-700 border border-pink-200 font-bold" data-stage="0">1: 2026</button>
+            <button type="button" onclick="jumpToMtnMilestone(1)" class="mtn-quick-btn flex-1 py-1.5 px-2 rounded-xl transition-all whitespace-nowrap text-center text-slate-600 hover:bg-slate-50 border border-transparent" data-stage="1">2: 2027</button>
+            <button type="button" onclick="jumpToMtnMilestone(2)" class="mtn-quick-btn flex-1 py-1.5 px-2 rounded-xl transition-all whitespace-nowrap text-center text-slate-600 hover:bg-slate-50 border border-transparent" data-stage="2">3: 2027+</button>
+            <button type="button" onclick="jumpToMtnMilestone(3)" class="mtn-quick-btn flex-1 py-1.5 px-2 rounded-xl transition-all whitespace-nowrap text-center text-slate-600 hover:bg-slate-50 border border-transparent" data-stage="3">4: 2028</button>
+            <button type="button" onclick="jumpToMtnMilestone(4)" class="mtn-quick-btn flex-1 py-1.5 px-2 rounded-xl transition-all whitespace-nowrap text-center text-slate-600 hover:bg-slate-50 border border-transparent flex items-center justify-center gap-1" data-stage="4">🚩 Summit</button>
+          </div>
+        </div>
+        <!-- Mountain Roadmap Infographic (Visible on BOTH Mobile & Desktop) -->
+        <div class="relative w-full aspect-[1200/1040] max-w-2xl lg:max-w-none mx-auto lg:aspect-auto lg:min-h-[1080px] rounded-3xl lg:rounded-none bg-gradient-to-b from-sky-100/70 via-emerald-50/40 to-slate-50 lg:bg-transparent border border-slate-200/80 lg:border-none shadow-lg lg:shadow-none overflow-hidden lg:overflow-visible my-3 lg:my-0">
           
           <!-- SVG Mountain & Winding Road Graphic -->
           <svg id="mtn-svg" class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1200 1060" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -8092,32 +8124,64 @@ body.intro-dismissed .stagger-metric-card-4 {
               <rect x="-18" y="10.5" width="9" height="3.5" rx="1.5" fill="#1e293b" />
               <rect x="10" y="10.5" width="9" height="3.5" rx="1.5" fill="#1e293b" />
             </g>
+
+            <!-- SVG Year Badges on Mountain Path (Rendered at all screen resolutions) -->
+            <!-- 2026 -->
+            <g id="mtn-svg-year-0" class="cursor-pointer pointer-events-auto transition-transform duration-300 hover:scale-110" onclick="jumpToMtnMilestone(0)">
+              <rect x="675" y="738" width="115" height="44" rx="12" fill="#ffffff" fill-opacity="0.96" stroke="#fbcfe8" stroke-width="2" filter="url(#mtnShadow)" />
+              <text x="732" y="769" text-anchor="middle" font-family="'Outfit', sans-serif" font-weight="900" font-size="22" fill="#db2777">2026</text>
+            </g>
+
+            <!-- 2027 -->
+            <g id="mtn-svg-year-1" class="cursor-pointer pointer-events-auto transition-transform duration-300 hover:scale-110" onclick="jumpToMtnMilestone(1)">
+              <rect x="385" y="462" width="115" height="44" rx="12" fill="#ffffff" fill-opacity="0.96" stroke="#e9d5ff" stroke-width="2" filter="url(#mtnShadow)" />
+              <text x="442" y="493" text-anchor="middle" font-family="'Outfit', sans-serif" font-weight="900" font-size="22" fill="#7c3aed">2027</text>
+            </g>
+
+            <!-- 2027+ -->
+            <g id="mtn-svg-year-2" class="cursor-pointer pointer-events-auto transition-transform duration-300 hover:scale-110" onclick="jumpToMtnMilestone(2)">
+              <rect x="560" y="332" width="125" height="44" rx="12" fill="#ffffff" fill-opacity="0.96" stroke="#bae6fd" stroke-width="2" filter="url(#mtnShadow)" />
+              <text x="622" y="363" text-anchor="middle" font-family="'Outfit', sans-serif" font-weight="900" font-size="22" fill="#0284c7">2027+</text>
+            </g>
+
+            <!-- 2028 -->
+            <g id="mtn-svg-year-3" class="cursor-pointer pointer-events-auto transition-transform duration-300 hover:scale-110" onclick="jumpToMtnMilestone(3)">
+              <rect x="530" y="192" width="115" height="44" rx="12" fill="#ffffff" fill-opacity="0.96" stroke="#a7f3d0" stroke-width="2" filter="url(#mtnShadow)" />
+              <text x="587" y="223" text-anchor="middle" font-family="'Outfit', sans-serif" font-weight="900" font-size="22" fill="#059669">2028</text>
+            </g>
+
+            <!-- Summit Banner Badge -->
+            <g id="mtn-svg-summit-badge" class="cursor-pointer pointer-events-auto transition-transform duration-300 hover:scale-105" onclick="jumpToMtnMilestone(4)">
+              <rect x="495" y="36" width="210" height="36" rx="18" fill="#ffffff" fill-opacity="0.96" stroke="#fca5a5" stroke-width="2" filter="url(#mtnShadow)" />
+              <circle cx="515" cy="54" r="5.5" fill="#ef4444" class="animate-pulse" />
+              <text x="612" y="61" text-anchor="middle" font-family="'Outfit', sans-serif" font-weight="800" font-size="12" letter-spacing="0.5" fill="#b91c1c">CE MARK MDR CLASS IIa</text>
+            </g>
           </svg>
 
           <!-- Year Badges along the path (Interactive Clickable) -->
           <!-- 2026 -->
-          <div id="mtn-year-0" onclick="jumpToMtnMilestone(0)" class="absolute cursor-pointer transition-all duration-300 hover:scale-110" style="top: 752px; left: 705px; z-index: 20;">
+          <div id="mtn-year-0" onclick="jumpToMtnMilestone(0)" class="absolute cursor-pointer transition-all duration-300 hover:scale-110 hidden lg:block" style="top: 752px; left: 705px; z-index: 20;">
             <span class="font-display-hero font-black text-2xl text-pink-600 tracking-tight drop-shadow-xs bg-white/95 px-2.5 py-1 rounded-xl border border-pink-200/80 shadow-xs">
               2026
             </span>
           </div>
 
           <!-- 2027 -->
-          <div id="mtn-year-1" onclick="jumpToMtnMilestone(1)" class="absolute cursor-pointer transition-all duration-300 hover:scale-110" style="top: 480px; left: 450px; z-index: 20;">
+          <div id="mtn-year-1" onclick="jumpToMtnMilestone(1)" class="absolute cursor-pointer transition-all duration-300 hover:scale-110 hidden lg:block" style="top: 480px; left: 450px; z-index: 20;">
             <span class="font-display-hero font-black text-2xl text-purple-600 tracking-tight drop-shadow-xs bg-white/95 px-2.5 py-1 rounded-xl border border-purple-200/80 shadow-xs">
               2027
             </span>
           </div>
 
           <!-- 2027+ -->
-          <div id="mtn-year-2" onclick="jumpToMtnMilestone(2)" class="absolute cursor-pointer transition-all duration-300 hover:scale-110" style="top: 350px; left: 615px; z-index: 20;">
+          <div id="mtn-year-2" onclick="jumpToMtnMilestone(2)" class="absolute cursor-pointer transition-all duration-300 hover:scale-110 hidden lg:block" style="top: 350px; left: 615px; z-index: 20;">
             <span class="font-display-hero font-black text-2xl text-blue-600 tracking-tight drop-shadow-xs bg-white/95 px-2.5 py-1 rounded-xl border border-blue-200/80 shadow-xs">
               2027+
             </span>
           </div>
 
           <!-- 2028 -->
-          <div id="mtn-year-3" onclick="jumpToMtnMilestone(3)" class="absolute cursor-pointer transition-all duration-300 hover:scale-110" style="top: 210px; left: 580px; z-index: 20;">
+          <div id="mtn-year-3" onclick="jumpToMtnMilestone(3)" class="absolute cursor-pointer transition-all duration-300 hover:scale-110 hidden lg:block" style="top: 210px; left: 580px; z-index: 20;">
             <span class="font-display-hero font-black text-2xl text-emerald-600 tracking-tight drop-shadow-xs bg-white/95 px-2.5 py-1 rounded-xl border border-emerald-200/80 shadow-xs">
               2028
             </span>
@@ -8128,7 +8192,7 @@ body.intro-dismissed .stagger-metric-card-4 {
           <!-- HTML Milestone Callout Cards (Alternating Left and Right) -->
 
           <!-- STAGE 01 (Right Side, aligned with Pin 1) -->
-          <div id="mtn-card-0" onclick="jumpToMtnMilestone(0)" class="roadmap-card absolute w-[365px] p-5 rounded-2xl bg-white/95 backdrop-blur-md border border-pink-200 shadow-[0_10px_30px_rgba(219,39,119,0.08)] cursor-pointer hover:shadow-xl hover:-translate-y-1" style="top: 685px; right: 15px; z-index: 30;">
+          <div id="mtn-card-0" onclick="jumpToMtnMilestone(0)" class="roadmap-card hidden lg:block absolute w-[365px] p-5 rounded-2xl bg-white/95 backdrop-blur-md border border-pink-200 shadow-[0_10px_30px_rgba(219,39,119,0.08)] cursor-pointer hover:shadow-xl hover:-translate-y-1" style="top: 685px; right: 15px; z-index: 30;">
             <div class="flex items-center justify-between gap-2 mb-2.5">
               <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-50 border border-pink-200/80 text-[11px] font-mono font-bold text-pink-900 tracking-wider">
                 <span class="w-2 h-2 rounded-full bg-pink-500 animate-pulse"></span>
@@ -8152,7 +8216,7 @@ body.intro-dismissed .stagger-metric-card-4 {
           </div>
 
           <!-- STAGE 02 (Left Side, aligned with Pin 2) -->
-          <div id="mtn-card-1" onclick="jumpToMtnMilestone(1)" class="roadmap-card absolute w-[365px] p-5 rounded-2xl bg-white/95 backdrop-blur-md border border-purple-200 shadow-[0_10px_30px_rgba(124,58,237,0.08)] cursor-pointer hover:shadow-xl hover:-translate-y-1 opacity-60" style="top: 420px; left: 15px; z-index: 30;">
+          <div id="mtn-card-1" onclick="jumpToMtnMilestone(1)" class="roadmap-card hidden lg:block absolute w-[365px] p-5 rounded-2xl bg-white/95 backdrop-blur-md border border-purple-200 shadow-[0_10px_30px_rgba(124,58,237,0.08)] cursor-pointer hover:shadow-xl hover:-translate-y-1 opacity-60" style="top: 420px; left: 15px; z-index: 30;">
             <div class="flex items-center justify-between gap-2 mb-2.5">
               <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 border border-purple-200/80 text-[11px] font-mono font-bold text-purple-900 tracking-wider">
                 <span class="w-2 h-2 rounded-full bg-purple-500"></span>
@@ -8176,7 +8240,7 @@ body.intro-dismissed .stagger-metric-card-4 {
           </div>
 
           <!-- STAGE 03 (Right Side, aligned with Pin 3) -->
-          <div id="mtn-card-2" onclick="jumpToMtnMilestone(2)" class="roadmap-card absolute w-[365px] p-5 rounded-2xl bg-white/95 backdrop-blur-md border border-blue-200 shadow-[0_10px_30px_rgba(2,132,199,0.08)] cursor-pointer hover:shadow-xl hover:-translate-y-1 opacity-60" style="top: 290px; right: 15px; z-index: 30;">
+          <div id="mtn-card-2" onclick="jumpToMtnMilestone(2)" class="roadmap-card hidden lg:block absolute w-[365px] p-5 rounded-2xl bg-white/95 backdrop-blur-md border border-blue-200 shadow-[0_10px_30px_rgba(2,132,199,0.08)] cursor-pointer hover:shadow-xl hover:-translate-y-1 opacity-60" style="top: 290px; right: 15px; z-index: 30;">
             <div class="flex items-center justify-between gap-2 mb-2.5">
               <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-[11px] font-mono font-bold text-blue-900 tracking-wider">
                 <span class="w-2 h-2 rounded-full bg-blue-500"></span>
@@ -8200,7 +8264,7 @@ body.intro-dismissed .stagger-metric-card-4 {
           </div>
 
           <!-- STAGE 04 (Left Side, aligned with Pin 4) -->
-          <div id="mtn-card-3" onclick="jumpToMtnMilestone(3)" class="roadmap-card absolute w-[365px] p-5 rounded-2xl bg-white/95 backdrop-blur-md border border-emerald-200 shadow-[0_10px_30px_rgba(5,150,105,0.08)] cursor-pointer hover:shadow-xl hover:-translate-y-1 opacity-60" style="top: 150px; left: 15px; z-index: 30;">
+          <div id="mtn-card-3" onclick="jumpToMtnMilestone(3)" class="roadmap-card hidden lg:block absolute w-[365px] p-5 rounded-2xl bg-white/95 backdrop-blur-md border border-emerald-200 shadow-[0_10px_30px_rgba(5,150,105,0.08)] cursor-pointer hover:shadow-xl hover:-translate-y-1 opacity-60" style="top: 150px; left: 15px; z-index: 30;">
             <div class="flex items-center justify-between gap-2 mb-2.5">
               <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200/80 text-[11px] font-mono font-bold text-emerald-900 tracking-wider">
                 <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
@@ -8598,13 +8662,43 @@ body.intro-dismissed .stagger-metric-card-4 {
           function updateMtnTabButtons(activeIdx) {
             for (let i = 0; i < mtnMilestones.length; i++) {
               const btn = document.getElementById(`mtn-tab-${i}`);
-              if (!btn) continue;
-              if (i === activeIdx) {
-                btn.classList.add('ring-2', 'ring-slate-800', 'scale-105');
-                btn.style.boxShadow = `0 4px 14px ${mtnMilestones[i].color}40`;
+              if (btn) {
+                if (i === activeIdx) {
+                  btn.classList.add('ring-2', 'ring-slate-800', 'scale-105');
+                  btn.style.boxShadow = `0 4px 14px ${mtnMilestones[i].color}40`;
+                } else {
+                  btn.classList.remove('ring-2', 'ring-slate-800', 'scale-105');
+                  btn.style.boxShadow = '';
+                }
+              }
+            }
+
+            // Sync Mobile Quick Bar Pills
+            const quickBtns = document.querySelectorAll('.mtn-quick-btn');
+            quickBtns.forEach(btn => {
+              const st = parseInt(btn.getAttribute('data-stage'));
+              if (st === activeIdx) {
+                const m = mtnMilestones[st];
+                btn.style.backgroundColor = m ? `${m.color}18` : '#f0fdf4';
+                btn.style.color = m ? m.color : '#166534';
+                btn.style.borderColor = m ? `${m.color}60` : '#bbf7d0';
+                btn.style.borderWidth = '1px';
               } else {
-                btn.classList.remove('ring-2', 'ring-slate-800', 'scale-105');
-                btn.style.boxShadow = '';
+                btn.style.backgroundColor = '';
+                btn.style.color = '';
+                btn.style.borderColor = 'transparent';
+              }
+            });
+
+            // Sync SVG Year Badges
+            for (let i = 0; i < 4; i++) {
+              const svgYear = document.getElementById(`mtn-svg-year-${i}`);
+              if (svgYear) {
+                if (i === activeIdx) {
+                  svgYear.setAttribute('transform', 'scale(1.1) translate(-25, -25)');
+                } else {
+                  svgYear.setAttribute('transform', '');
+                }
               }
             }
           }
