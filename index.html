@@ -562,11 +562,20 @@ body.intro-dismissed .stagger-metric-card-4 {
       <div class="relative w-full h-full flex items-center justify-center">
         
         <!-- Seamless Fullscreen Video: 9:16 on mobile (fills 100% of mobile screen), 16:9 on desktop -->
-        <video id="intro-video-element" poster="poster_mobile_portrait.jpg" class="w-full h-full object-cover select-none" playsinline preload="auto">
+        <video id="intro-video-element" poster="poster_mobile_portrait.jpg" class="w-full h-full object-cover select-none" autoplay playsinline preload="auto">
           <source id="intro-source-mobile" media="(max-width: 768px)" src="ZenithDX_mobile_portrait.mp4" type="video/mp4">
           <source id="intro-source-desktop" media="(min-width: 769px)" src="ZenithDX_desktop.mp4" type="video/mp4">
           <source src="ZenithDX_desktop.mp4" type="video/mp4">
         </video>
+
+        <!-- Dynamic Audio Status Indicator / Unmute Pill -->
+        <button type="button" id="intro-sound-toggle" class="absolute top-5 right-5 sm:top-7 sm:right-8 z-40 flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-slate-950/80 hover:bg-slate-900 backdrop-blur-md border border-white/20 text-white font-mono text-xs shadow-lg cursor-pointer transition-all hover:scale-105 active:scale-95 select-none" title="Audio Toggle" aria-label="Toggle Audio">
+          <span id="intro-sound-icon" class="material-symbols-outlined text-teal-400 text-sm sm:text-base">volume_up</span>
+          <span id="intro-sound-label" class="text-[11px] sm:text-xs font-semibold text-slate-200">
+            <span class="lang-en">Audio Active</span>
+            <span class="lang-el hidden">Ήχος Ενεργός</span>
+          </span>
+        </button>
   
         <!-- Action Button: Floating centrally at bottom on mobile, bottom-right on desktop -->
         <div class="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-8 z-30 flex flex-col items-center gap-2">
@@ -586,6 +595,38 @@ body.intro-dismissed .stagger-metric-card-4 {
   
     <script>
       // Fullscreen Intro Video, Sound & Entrance Animations Coordinator
+      window.updateIntroSoundUI = function(isAudible) {
+        const icon = document.getElementById('intro-sound-icon');
+        const label = document.getElementById('intro-sound-label');
+        if (icon && label) {
+          if (isAudible) {
+            icon.textContent = 'volume_up';
+            icon.className = 'material-symbols-outlined text-teal-400 text-sm sm:text-base';
+            label.innerHTML = '<span class="lang-en">Audio Active</span><span class="lang-el hidden">Ήχος Ενεργός</span>';
+          } else {
+            icon.textContent = 'volume_off';
+            icon.className = 'material-symbols-outlined text-amber-400 text-sm sm:text-base animate-pulse';
+            label.innerHTML = '<span class="lang-en">Tap for Audio</span><span class="lang-el hidden">Πατήστε για Ήχο</span>';
+          }
+        }
+      };
+
+      window.toggleIntroSound = function() {
+        const video = document.getElementById('intro-video-element');
+        if (video) {
+          if (video.muted) {
+            video.muted = false;
+            video.defaultMuted = false;
+            video.volume = 1.0;
+            video.play().catch(() => {});
+            window.updateIntroSoundUI(true);
+          } else {
+            video.muted = true;
+            window.updateIntroSoundUI(false);
+          }
+        }
+      };
+
       window.handleLandingInteraction = function(event) {
         const video = document.getElementById('intro-video-element');
         if (video) {
@@ -594,8 +635,10 @@ body.intro-dismissed .stagger-metric-card-4 {
           if (video.paused) {
             video.play().catch(() => {});
           }
+          window.updateIntroSoundUI(true);
         }
       };
+
       window.triggerHeroAnimations = function() {
         const heroEls = document.querySelectorAll(
           '.hero-animate-title, .hero-animate-subtitle, .hero-animate-ctas, ' +
@@ -608,6 +651,7 @@ body.intro-dismissed .stagger-metric-card-4 {
         });
         document.body.classList.add('intro-dismissed');
       };
+
       window.dismissIntroVideo = function() {
         const overlay = document.getElementById('intro-video-overlay');
         if (!overlay || overlay.dataset.dismissed === 'true') return;
@@ -649,58 +693,112 @@ body.intro-dismissed .stagger-metric-card-4 {
         } else {
           video.src = 'ZenithDX_desktop.mp4';
         }
-        video.load();
 
         document.body.classList.add('overflow-hidden');
 
-        // Sound is ALWAYS ON
+        // Configure audio directly: unmuted, full volume
         video.muted = false;
+        video.defaultMuted = false;
         video.volume = 1.0;
 
-        // Play with sound immediately
-        const p = video.play();
-        if (p !== undefined) {
-          p.catch((err) => {
-            // If browser autoplay policy requires mute first, start video and unmute on first gesture
-            video.muted = true;
-            video.play().catch(() => {});
+        function attemptDirectUnmutedPlayback() {
+          video.muted = false;
+          video.defaultMuted = false;
+          video.volume = 1.0;
+          const p = video.play();
+          if (p !== undefined) {
+            p.then(() => {
+              // Direct unmuted playback succeeded! Sound is directly ON
+              window.updateIntroSoundUI(true);
+            }).catch((err) => {
+              // Browser requires user interaction before unmuting:
+              // Play visual track and arm ultra-responsive unmute on first micro-interaction
+              video.muted = true;
+              video.play().catch(() => {});
+              window.updateIntroSoundUI(false);
+              armInstantUnmute();
+            });
+          }
+        }
+
+        function instantUnmuteHandler() {
+          if (video) {
+            video.muted = false;
+            video.defaultMuted = false;
+            video.volume = 1.0;
+            const p = video.play();
+            if (p !== undefined) {
+              p.then(() => {
+                window.updateIntroSoundUI(true);
+                disarmInstantUnmute();
+              }).catch(() => {
+                video.muted = true;
+                video.play().catch(() => {});
+              });
+            } else {
+              window.updateIntroSoundUI(true);
+              disarmInstantUnmute();
+            }
+          }
+        }
+
+        const gestureEvents = [
+          'pointerdown', 'touchstart', 'mousedown', 'keydown', 'click', 'touchend'
+        ];
+
+        function armInstantUnmute() {
+          gestureEvents.forEach(ev => {
+            window.addEventListener(ev, instantUnmuteHandler, { capture: true, passive: true });
+          });
+
+          // Web Audio API unlock helper
+          try {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (AudioCtx) {
+              const ctx = new AudioCtx();
+              if (ctx.state === 'running') {
+                video.muted = false;
+                window.updateIntroSoundUI(true);
+              }
+            }
+          } catch(e) {}
+        }
+
+        function disarmInstantUnmute() {
+          gestureEvents.forEach(ev => {
+            window.removeEventListener(ev, instantUnmuteHandler, { capture: true });
           });
         }
 
-      // Ensure sound is unmuted and active on any user action
-      function ensureSoundActive() {
-        if (video) {
-          video.muted = false;
-          video.volume = 1.0;
+        // Trigger immediate playback
+        attemptDirectUnmutedPlayback();
+
+        video.addEventListener('ended', function() {
+          window.dismissIntroVideo();
+        });
+
+        // Fallback safety timer (14s)
+        setTimeout(() => {
+          window.dismissIntroVideo();
+        }, 14000);
+
+        const soundBtn = document.getElementById('intro-sound-toggle');
+        if (soundBtn) {
+          soundBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            window.toggleIntroSound();
+          });
         }
-        window.removeEventListener('click', ensureSoundActive);
-        window.removeEventListener('keydown', ensureSoundActive);
-        window.removeEventListener('touchstart', ensureSoundActive);
-        window.removeEventListener('pointerdown', ensureSoundActive);
-      }
-      window.addEventListener('click', ensureSoundActive, { passive: true });
-      window.addEventListener('keydown', ensureSoundActive, { passive: true });
-      window.addEventListener('touchstart', ensureSoundActive, { passive: true });
-      window.addEventListener('pointerdown', ensureSoundActive, { passive: true });
 
-      video.addEventListener('ended', function() {
-        window.dismissIntroVideo();
-      });
-
-      // Fallback timer (14s)
-      setTimeout(() => {
-        window.dismissIntroVideo();
-      }, 14000);
-
-      window.addEventListener('keydown', (e) => {
-        if (overlay && overlay.style.display !== 'none' && overlay.dataset.dismissed !== 'true') {
-          if (e.code === 'Escape' || e.code === 'Enter') {
-            window.dismissIntroVideo();
+        window.addEventListener('keydown', (e) => {
+          if (overlay && overlay.style.display !== 'none' && overlay.dataset.dismissed !== 'true') {
+            if (e.code === 'Escape' || e.code === 'Enter') {
+              window.dismissIntroVideo();
+            }
           }
-        }
-      });
-    })();
-  </script>
+        });
+      })();
+    </script>
 
   <header id="global-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
   <!-- Main Navigation Bar -->
