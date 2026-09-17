@@ -15,6 +15,12 @@
   <meta name="author" content="ZenithDx Medical AI Technologies">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 
+  <!-- Browser Tab Favicon & App Icons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
   <!-- Canonical & Alternate Language Indexing (Exact hreflang Authority) -->
   <link rel="canonical" id="canonical-url" href="https://www.zenithdx.health/" />
   <link rel="alternate" hreflang="en" href="https://www.zenithdx.health/?lang=en" />
@@ -569,6 +575,12 @@ body.intro-dismissed .stagger-metric-card-4 {
           <source id="intro-source-desktop" media="(min-width: 769px)" src="ZenithDX_desktop.mp4" type="video/mp4">
           <source src="ZenithDX_desktop.mp4" type="video/mp4">
         </video>
+
+        <!-- Brand Emblem Pill (Top Left) -->
+        <div class="absolute top-5 left-5 sm:top-7 sm:left-8 z-40 flex items-center gap-2.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-slate-950/85 backdrop-blur-md border border-cyan-400/40 text-white shadow-[0_4px_20px_rgba(6,182,212,0.25)] select-none pointer-events-none">
+          <img src="zenithdx_emblem.png" alt="ZenithDx" class="w-5 h-5 sm:w-6 sm:h-6 object-contain" />
+          <span class="font-mono text-xs sm:text-sm font-bold tracking-wider text-slate-100">Zenith<span class="text-cyan-400">Dx</span></span>
+        </div>
 
         <!-- Single Audio Control Pill (Top Right) -->
         <button type="button" id="intro-sound-toggle" onclick="event.stopPropagation(); window.toggleIntroSound();" class="absolute top-5 right-5 sm:top-7 sm:right-8 z-40 flex items-center gap-2.5 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-slate-950/90 hover:bg-slate-900 backdrop-blur-md border border-cyan-400/60 text-white font-mono text-xs shadow-[0_4px_20px_rgba(6,182,212,0.35)] cursor-pointer transition-all hover:scale-105 active:scale-95 select-none" title="Audio Toggle" aria-label="Toggle Audio">
@@ -9398,6 +9410,7 @@ body.intro-dismissed .stagger-metric-card-4 {
     <!-- Modal Header -->
     <div class="mb-5 pr-10">
       <div class="flex items-center gap-2 mb-1.5">
+        <img src="zenithdx_emblem.png" alt="ZenithDx Emblem" class="w-5 h-5 object-contain" />
         <span class="inline-flex items-center gap-1.5 text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
           Air-Gapped Sovereign Architecture
