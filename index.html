@@ -8348,8 +8348,8 @@ body.intro-dismissed .stagger-metric-card-4 {
             <!-- SVG Year Badges on Mountain Path (Rendered at all screen resolutions) -->
             <!-- 2026 -->
             <g id="mtn-svg-year-0" class="cursor-pointer pointer-events-auto transition-transform duration-300 hover:scale-110" onclick="jumpToMtnMilestone(0)">
-              <rect x="675" y="738" width="115" height="44" rx="12" fill="#ffffff" fill-opacity="0.96" stroke="#fbcfe8" stroke-width="2" filter="url(#mtnShadow)" />
-              <text x="732" y="769" text-anchor="middle" font-family="'Outfit', sans-serif" font-weight="900" font-size="22" fill="#db2777">2026</text>
+              <rect x="545" y="740" width="115" height="44" rx="12" fill="#ffffff" fill-opacity="0.96" stroke="#fbcfe8" stroke-width="2" filter="url(#mtnShadow)" />
+              <text x="602" y="771" text-anchor="middle" font-family="'Outfit', sans-serif" font-weight="900" font-size="22" fill="#db2777">2026</text>
             </g>
 
             <!-- 2027 -->
@@ -8377,37 +8377,6 @@ body.intro-dismissed .stagger-metric-card-4 {
               <text x="612" y="61" text-anchor="middle" font-family="'Outfit', sans-serif" font-weight="800" font-size="12" letter-spacing="0.5" fill="#b91c1c">CE MARK MDR CLASS IIa</text>
             </g>
           </svg>
-
-          <!-- Year Badges along the path (Interactive Clickable) -->
-          <!-- 2026 -->
-          <div id="mtn-year-0" onclick="jumpToMtnMilestone(0)" class="absolute cursor-pointer transition-all duration-300 hover:scale-110 hidden lg:block" style="top: 752px; left: 705px; z-index: 20;">
-            <span class="font-display-hero font-black text-2xl text-pink-600 tracking-tight drop-shadow-xs bg-white/95 px-2.5 py-1 rounded-xl border border-pink-200/80 shadow-xs">
-              2026
-            </span>
-          </div>
-
-          <!-- 2027 -->
-          <div id="mtn-year-1" onclick="jumpToMtnMilestone(1)" class="absolute cursor-pointer transition-all duration-300 hover:scale-110 hidden lg:block" style="top: 480px; left: 450px; z-index: 20;">
-            <span class="font-display-hero font-black text-2xl text-purple-600 tracking-tight drop-shadow-xs bg-white/95 px-2.5 py-1 rounded-xl border border-purple-200/80 shadow-xs">
-              2027
-            </span>
-          </div>
-
-          <!-- 2027+ -->
-          <div id="mtn-year-2" onclick="jumpToMtnMilestone(2)" class="absolute cursor-pointer transition-all duration-300 hover:scale-110 hidden lg:block" style="top: 350px; left: 615px; z-index: 20;">
-            <span class="font-display-hero font-black text-2xl text-blue-600 tracking-tight drop-shadow-xs bg-white/95 px-2.5 py-1 rounded-xl border border-blue-200/80 shadow-xs">
-              2027+
-            </span>
-          </div>
-
-          <!-- 2028 -->
-          <div id="mtn-year-3" onclick="jumpToMtnMilestone(3)" class="absolute cursor-pointer transition-all duration-300 hover:scale-110 hidden lg:block" style="top: 210px; left: 580px; z-index: 20;">
-            <span class="font-display-hero font-black text-2xl text-emerald-600 tracking-tight drop-shadow-xs bg-white/95 px-2.5 py-1 rounded-xl border border-emerald-200/80 shadow-xs">
-              2028
-            </span>
-          </div>
-
-          
 
           <!-- HTML Milestone Callout Cards (Alternating Left and Right) -->
 
@@ -8783,7 +8752,7 @@ body.intro-dismissed .stagger-metric-card-4 {
               const card = document.getElementById(`mtn-card-${i}`);
               const mobCard = document.getElementById(`mtn-mob-${i}`);
               const ripple = document.getElementById(`mtn-ripple-${i}`);
-              const yearBadge = document.getElementById(`mtn-year-${i}`);
+              const svgYear = document.getElementById(`mtn-svg-year-${i}`);
               const lineGuide = document.getElementById(`mtn-line-${i}`);
 
               if (i === idx) {
@@ -8801,10 +8770,13 @@ body.intro-dismissed .stagger-metric-card-4 {
                 if (ripple) {
                   ripple.setAttribute('opacity', '1');
                 }
-                if (yearBadge) {
-                  yearBadge.classList.add('scale-115');
-                  yearBadge.firstElementChild.style.boxShadow = `0 10px 25px -5px ${m.color}50`;
-                  yearBadge.firstElementChild.style.borderColor = m.color;
+                if (svgYear) {
+                  svgYear.style.transform = 'scale(1.12)';
+                  const rect = svgYear.querySelector('rect');
+                  if (rect) {
+                    rect.setAttribute('stroke', m.color);
+                    rect.setAttribute('stroke-width', '3');
+                  }
                 }
                 if (lineGuide) {
                   lineGuide.setAttribute('stroke-width', '4');
@@ -8822,10 +8794,10 @@ body.intro-dismissed .stagger-metric-card-4 {
                   mobCard.classList.remove('ring-2');
                 }
                 if (ripple) ripple.setAttribute('opacity', '0');
-                if (yearBadge) {
-                  yearBadge.classList.remove('scale-115');
-                  yearBadge.firstElementChild.style.boxShadow = '';
-                  yearBadge.firstElementChild.style.borderColor = '';
+                if (svgYear) {
+                  svgYear.style.transform = 'scale(1)';
+                  const rect = svgYear.querySelector('rect');
+                  if (rect) rect.setAttribute('stroke-width', '2');
                 }
                 if (lineGuide) {
                   lineGuide.setAttribute('stroke-width', '2.5');
@@ -8843,10 +8815,10 @@ body.intro-dismissed .stagger-metric-card-4 {
                   mobCard.classList.remove('ring-2');
                 }
                 if (ripple) ripple.setAttribute('opacity', '0');
-                if (yearBadge) {
-                  yearBadge.classList.remove('scale-115');
-                  yearBadge.firstElementChild.style.boxShadow = '';
-                  yearBadge.firstElementChild.style.borderColor = '';
+                if (svgYear) {
+                  svgYear.style.transform = 'scale(1)';
+                  const rect = svgYear.querySelector('rect');
+                  if (rect) rect.setAttribute('stroke-width', '2');
                 }
                 if (lineGuide) {
                   lineGuide.setAttribute('stroke-width', '2.5');
