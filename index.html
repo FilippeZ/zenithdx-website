@@ -11235,6 +11235,15 @@ async function sendZenithEmail(formCategory, formData, submitBtn, successCallbac
     });
   }
 
+  // UNBREAKABLE LOCAL BACKUP: Store lead in browser storage so no inquiry is ever lost
+  try {
+    const existingLeads = JSON.parse(localStorage.getItem('zenith_saved_leads') || '[]');
+    existingLeads.unshift(payload);
+    localStorage.setItem('zenith_saved_leads', JSON.stringify(existingLeads.slice(0, 50)));
+  } catch (storageErr) {
+    console.warn("Local lead caching skipped:", storageErr);
+  }
+
   try {
     const res = await fetch("https://formsubmit.co/ajax/ce807ba36b462effd1aace2186e12a51", {
       method: "POST",
@@ -11245,7 +11254,10 @@ async function sendZenithEmail(formCategory, formData, submitBtn, successCallbac
       body: JSON.stringify(payload)
     });
     const result = await res.json();
-    console.log("Email dispatch confirmed to zenithdxcopilot@gmail.com:", result);
+    console.log("Email dispatch status from FormSubmit:", result);
+    if (result && result.message) {
+      sessionStorage.setItem('zenith_formsubmit_last_status', result.message);
+    }
   } catch (err) {
     console.warn("Direct HTTP transmission logged, applying fallback:", err);
   }
